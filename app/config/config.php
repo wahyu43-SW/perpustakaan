@@ -1,6 +1,6 @@
 <?php  
 
-define('BASEURL', 'http://localhost/kelompok_3/projek_perpustakaan/public');
+define('BASEURL', 'http://localhost/projek_perpustakaan/Perpustakaan_mvc/public/');
 
 //DB
 define('DB_HOST', 'localhost');
