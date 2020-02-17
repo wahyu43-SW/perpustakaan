@@ -10,7 +10,8 @@ class Get_models
 		$this->db = new Database;
 	}
 
-	/*-------------------------------------> ambil data by <--------------------------------------------*/
+	/*---------------------------> ambil data by <-----------------------------------*/
+	
 	public function ambilBukuBy($verificator, $value)
     {
         if (isset($verificator) && isset($value)) {
@@ -21,10 +22,10 @@ class Get_models
         }
     }
 
-    public function ambilUserBy($verificator, $value)
+    public function ambilDataBy($verificator, $value, $tb)
     {
         if (isset($verificator) && isset($value)) {
-            $q = "SELECT * FROM auth WHERE $verificator = :$verificator";
+            $q = "SELECT * FROM $tb WHERE $verificator = :$verificator";
             $this->db->query($q);
             $this->db->bind($verificator, $value);
             return $this->db->single();
@@ -47,7 +48,7 @@ class Get_models
 	}
 
 
-	/*-------------------------------------> ambil user <--------------------------------------------*/
+	/*-------------------------------------> ambil user <---------------------------------------*/
 
 	public function ambilUser()
 	{

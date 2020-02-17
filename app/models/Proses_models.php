@@ -113,6 +113,16 @@ class Proses_models extends Controller
         $this->db->execute();
         return $this->db->rowCount();
     }
+
+    public function addJurusan($data)
+    {
+        $query = "INSERT INTO tb_jurusan VALUES ('', :jurusan)";
+        $this->db->query($query);
+        $this->db->bind('jurusan', $data['jurusan'] );
+
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
     
     /* ------------------------------> Hapus <--------------------------------- */
 
@@ -138,6 +148,26 @@ class Proses_models extends Controller
     public function hapus_user($id)
     {
         $query =  "DELETE FROM auth WHERE id_auth = :id";
+        $this->db->query($query);
+        $this->db->bind('id', $id);
+
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function hapus_kategori($id)
+    {
+        $query =  "DELETE FROM tb_kategori WHERE id_kategori = :id";
+        $this->db->query($query);
+        $this->db->bind('id', $id);
+
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function hapus_jurusan($id)
+    {
+        $query =  "DELETE FROM tb_jurusan WHERE id_jurusan = :id";
         $this->db->query($query);
         $this->db->bind('id', $id);
 
@@ -175,7 +205,28 @@ class Proses_models extends Controller
         return $this->db->rowCount();
     }
 
+    public function edit_kategori($data)
+    {
+        $query = "UPDATE tb_kategori SET kategori = :kategori, kode = :kode WHERE id_kategori = :id_kategori";
+        $this->db->query($query);
+        $this->db->bind('kategori', $data['kategori'] );
+        $this->db->bind('kode', $data['kode'] );
+        $this->db->bind('id_kategori', $data['id']);
 
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function edit_jurusan($data)
+    {
+        $query = "UPDATE tb_jurusan SET jurusan = :jurusan  WHERE id_jurusan = :id";
+        $this->db->query($query);
+        $this->db->bind('jurusan', $data['jurusan'] );
+        $this->db->bind('id', $data['id']);
+
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
 
 
 }

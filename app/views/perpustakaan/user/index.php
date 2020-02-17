@@ -53,7 +53,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="judul">Tambah User</h5>
+                <h5 class="modal-title" id="judul">Tambah User &nbsp;<i class="fas fa-user"></i></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -64,7 +64,25 @@
                         <label for="nama">Nama</label>
                         <input type="text" class="form-control" id="nama" name="nama">
                     </div>
-                    
+                    <div class="form-group">
+                       <label for="username">Username</label>
+                       <input type="text" class="form-control" id="username" name="username">
+                    </div>
+                    <div class="form-group">
+                       <label for="password">Password</label>
+                       <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                    <div class="form-group">
+                       <label for="level">Level</label>
+                        <select name="level" id="level" class="form-control">
+                            <option value="">Pilih Level</option>
+                            <?php foreach ($data['level'] as $level): ?>
+                                <option value="<?= $level['id_level'] ?>">
+                                    <?= $level['level'] ?>
+                                </option>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
                     <div class="form-group">
                        <label for="nis">Nis</label>
                        <input type="text" class="form-control" id="nis" name="nis">
@@ -89,25 +107,7 @@
                             <?php endforeach ?>
                         </select>
                     </div>
-                    <div class="form-group">
-                       <label for="username">Username</label>
-                       <input type="text" class="form-control" id="username" name="username">
-                    </div>
-                    <div class="form-group">
-                       <label for="password">Password</label>
-                       <input type="password" class="form-control" id="password" name="password">
-                    </div>
-                    <div class="form-group">
-                       <label for="level">Level</label>
-                        <select name="level" id="level" class="form-control">
-                            <option value="">Pilih Level</option>
-                            <?php foreach ($data['level'] as $level): ?>
-                                <option value="<?= $level['id_level'] ?>">
-                                    <?= $level['level'] ?>
-                                </option>
-                            <?php endforeach ?>
-                        </select>
-                    </div>
+                    
             </div>
             <div class="modal-footer">
                     <button type="submit" name="submit" class="btn btn-primary w-100">Tambah User &nbsp;<i class="fas fa-plus"></i></button>

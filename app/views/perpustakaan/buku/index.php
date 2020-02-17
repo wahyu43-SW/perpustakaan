@@ -1,7 +1,5 @@
  <div class="container-fluid">
-     <div class="row">
-        <div class="flash-data" data-flashdata="<?= Flasher::flash(); ?>"></div>
-    </div>
+    
   <!-- add buku -->
     <div class="d-flex justify-content-end t-scale">
         <a data-toggle="modal" data-target="#buku">

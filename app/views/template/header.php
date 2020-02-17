@@ -64,13 +64,21 @@
           <span> Daftar Buku</span>
         </a>
       </li>
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link" href="<?= BASEURL?>/buku/kategori">
-          <i class="fas fa-list"></i>
-          <span>Tambah Kategori</span>
+
+        <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+          <i class="fas fa-fw fa-list"></i>
+          <span> Tambah Data</span>
         </a>
+        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Menu Tambahan:</h6>
+            <a class="collapse-item" href="<?= BASEURL?>/buku/kategori">Tambah Kategori</a>
+            <a class="collapse-item" href="<?= BASEURL?>/user/jurusan">Tambah Jurusan</a>
+          </div>
+        </div>
       </li>
+
       <!-- Nav Item - Utilities Collapse Menu -->
      <li class="nav-item">
         <a class="nav-link" href="<?= BASEURL?>/user/index.php">
@@ -149,3 +157,6 @@
 
                 </nav>
                 <!-- End of Topbar -->
+                 <div class="row">
+                    <div class="flash-data" data-flashdata="<?= Flasher::flash(); ?>"></div>
+                </div>

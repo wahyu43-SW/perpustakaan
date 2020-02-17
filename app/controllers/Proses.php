@@ -47,6 +47,19 @@ class Proses extends Controller
         }
     }
 
+    public function addJurusan()
+    {
+        if ($this->model('Proses_models')->addJurusan($_POST) > 0){
+            Flasher::setFlash('berhasil', 'di Tambah','success');
+            header('Location: '. BASEURL . '/user/jurusan');
+            exit();
+        }else {
+            Flasher::setFlash('Gagal','di Tambah','danger');
+            header('Location: '. BASEURL . '/user/jurusan');
+            exit();
+        }
+    }
+
     /* ------------------------------> Hapus <--------------------------------- */
 
     public function hapus_buku($id)
@@ -75,6 +88,32 @@ class Proses extends Controller
         }
     }
 
+    public function hapus_kategori($id)
+    {
+        if ($this->model('Proses_models')->hapus_kategori($id) > 0){
+            Flasher::setFlash('berhasil', 'di hapus','success');
+            header('Location: '. BASEURL . '/buku/kategori');
+            exit();
+        }else {
+            Flasher::setFlash('Gagal','di hapus','danger');
+            header('Location: '. BASEURL . '/buku/kategori');
+            exit();
+        }
+    }
+
+    public function hapus_jurusan($id)
+    {
+        if ($this->model('Proses_models')->hapus_jurusan($id) > 0){
+            Flasher::setFlash('berhasil', 'di hapus','success');
+            header('Location: '. BASEURL . '/user/jurusan');
+            exit();
+        }else {
+            Flasher::setFlash('Gagal','di hapus','danger');
+            header('Location: '. BASEURL . '/user/jurusan');
+            exit();
+        }
+    }
+
      /* ------------------------------> Edit <--------------------------------- */
     
     public function editbuku()
@@ -99,6 +138,32 @@ class Proses extends Controller
         }else {
             Flasher::setFlash('Gagal','di ubah','danger');
             header('Location: '. BASEURL . '/user/index');
+            exit();
+        }
+    }
+
+    public function edit_kategori()
+    {
+        if ($this->model('Proses_models')->edit_kategori($_POST) > 0){
+            Flasher::setFlash('berhasil', 'di ubah','success');
+            header('Location: '. BASEURL . '/buku/kategori');
+            exit();
+        }else {
+            Flasher::setFlash('Gagal','di ubah','danger');
+            header('Location: '. BASEURL . '/buku/kategori');
+            exit();
+        }
+    }
+
+    public function edit_jurusan()
+    {
+        if ($this->model('Proses_models')->edit_jurusan($_POST) > 0){
+            Flasher::setFlash('berhasil', 'di ubah','success');
+            header('Location: '. BASEURL . '/user/jurusan');
+            exit();
+        }else {
+            Flasher::setFlash('Gagal','di ubah','danger');
+            header('Location: '. BASEURL . '/user/jurusan');
             exit();
         }
     }
