@@ -81,14 +81,14 @@
 
       <!-- Nav Item - Utilities Collapse Menu -->
      <li class="nav-item">
-        <a class="nav-link" href="<?= BASEURL?>/user/index.php">
+        <a class="nav-link" href="<?= BASEURL?>/user/index">
           <i class="fas fa-users"></i>
           <span> Daftar User</span>
         </a>
       </li>
       <!-- Nav Item - Pages Collapse Menu -->
        <li class="nav-item">
-        <a class="nav-link" href="<?= BASEURL?>/peminjaman/index.php">
+        <a class="nav-link" href="<?= BASEURL?>/peminjaman/index">
           <i class="rotate fas fa-outdent"></i>
           <span>Peminjaman</span>
         </a>
@@ -96,7 +96,7 @@
 
       <!-- Nav Item - Charts -->
        <li class="nav-item">
-        <a class="nav-link" href="<?= BASEURL?>/pengembalian/index.php">
+        <a class="nav-link" href="<?= BASEURL?>/kembali/index">
            <i class="fas fa-outdent"></i>
           <span>Pengembalian</span>
         </a>
@@ -104,7 +104,7 @@
 
       <!-- Nav Item - Tables -->
       <li class="nav-item">
-        <a class="nav-link" href="<?= BASEURL?>/laporan/index.php">
+        <a class="nav-link" href="<?= BASEURL?>/laporan/index">
           <i class="fas fa-download"></i>
           <span>Generate Report</span></a>
       </li>

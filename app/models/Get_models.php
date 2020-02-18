@@ -80,8 +80,17 @@ class Get_models
 	public function ambilPinjam()
 	{
 		$query = "SELECT * FROM tb_pinjam
-				  INNER JOIN auth ON tb_pinjam.id_auth = auth.id_auth
-				  INNER JOIN tb_buku ON tb_pinjam.id_buku  = tb_buku.id_buku";
+				  INNER JOIN tb_buku ON tb_pinjam.id_buku  = tb_buku.id_buku
+				  INNER JOIN auth ON tb_pinjam.id_auth = auth.id_auth WHERE keadaan = 0";
+		$this->db->query($query);
+		return $this->db->resultSet();
+	}
+
+	public function ambilPinjamkembali()
+	{
+		$query = "SELECT * FROM tb_pinjam
+				  INNER JOIN tb_buku ON tb_pinjam.id_buku  = tb_buku.id_buku
+				  INNER JOIN auth ON tb_pinjam.id_auth = auth.id_auth WHERE keadaan = 1";
 		$this->db->query($query);
 		return $this->db->resultSet();
 	}

@@ -180,4 +180,31 @@ class Proses extends Controller
             exit();
         }
     }
+
+    public function selesai($id)
+    {
+        if ($this->model('Proses_models')->selesai($id) > 0){
+            Flasher::setFlash('berhasil', 'di ubah','success');
+            header('Location: '. BASEURL . '/peminjaman/index');
+            exit();
+        }else {
+            Flasher::setFlash('Gagal','di ubah','danger');
+            header('Location: '. BASEURL . '/peminjaman/index');
+            exit();
+        }
+    }
+
+    public function selesai_kembali($id)
+    {
+        if ($this->model('Proses_models')->selesai_kembali($id) > 0){
+            Flasher::setFlash('berhasil', 'di Hapus','success');
+            header('Location: '. BASEURL . '/kembali/index');
+            exit();
+        }else {
+            Flasher::setFlash('Gagal','di Hapus','danger');
+            header('Location: '. BASEURL . '/kembali/index');
+            exit();
+        }
+    }
+
 }
