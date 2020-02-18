@@ -26,7 +26,7 @@ class Buku extends Controller
 	public function edit_buku($id)
 	{
 		$data['judul'] = "Edit Buku";
-		$data['buku'] = $this->model('Get_models')->ambilDataby("id_buku",$id,"auth");
+		$data['buku'] = $this->model('Get_models')->ambilDataby("id_buku",$id,"tb_buku");
 		$data['kategori'] = $this->model('Get_models')->ambilKategori($id);
 		$this->view('template/header',$data);
 		$this->view('perpustakaan/buku/edit_buku',$data);

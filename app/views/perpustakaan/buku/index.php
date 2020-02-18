@@ -22,6 +22,7 @@
                             <th>Pengarang</th>
                             <th>Kategori</th>
                             <th>Deskripsi</th>
+                            <th>Status</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -35,6 +36,7 @@
                                 <td><?= $buku['pengarang'] ?></td>
                                 <td><?= $buku['kategori']?> [<?= $buku['kode'] ?>]</td>
                                 <td width="20%"><?= $buku['deskripsi'] ?></td>
+                                <td><?= $buku['status'] === '1' ? "<b style='color:#1cc88a'>Ada</b>" : "<b style='color:#e74a3b'>Dipinjam</b>";?> </td>
                                 <td>
                                     <a href="<?= BASEURL?>/buku/edit_buku/<?= $buku['id_buku'] ?>" class="btn btn-primary btn-ubah "><i class="fas fa-edit"></i> &nbsp;Edit</a> 
                                     <a href="<?= BASEURL?>/Proses/hapus_buku/<?= $buku['id_buku'] ?>" class="btn btn-danger tombol-hapus"><i class="fas fa-trash-alt"></i> &nbsp;Hapus </a>

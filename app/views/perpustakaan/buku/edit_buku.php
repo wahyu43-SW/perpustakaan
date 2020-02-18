@@ -37,7 +37,7 @@
                          <div class="form-group text-center">
                             <img src="<?= BASEURL ?>/img/daftar-buku/<?= $data['buku']['gambar'] ?>" alt="" width="50%"><br><br>
                        <label for="gambar" style="margin-left: 7rem">Gambar Buku</label> &nbsp;
-                       <input type="file" id="gambar" name="gambar" value=" <?= $data['buku']['gambar'] ?> ">
+                       <input type="file" id="gambar" name="gambar">
                     </div>
                 </div>
                 <div class="modal-footer">

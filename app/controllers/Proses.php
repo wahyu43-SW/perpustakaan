@@ -60,6 +60,19 @@ class Proses extends Controller
         }
     }
 
+    public function addPinjam()
+    {
+        if ($this->model('Proses_models')->addPinjam($_POST) > 0){
+            Flasher::setFlash('berhasil', 'di Tambah','success');
+            header('Location: '. BASEURL . '/peminjaman/index');
+            exit();
+        }else {
+            Flasher::setFlash('Gagal','di Tambah','danger');
+            header('Location: '. BASEURL . '/peminjaman/index');
+            exit();
+        }
+    }
+
     /* ------------------------------> Hapus <--------------------------------- */
 
     public function hapus_buku($id)

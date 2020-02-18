@@ -52,7 +52,7 @@ class Proses_models extends Controller
                         // pindahin ke folder baru
                         if( move_uploaded_file($file['tmp_name'], $destination.$fileNewName) ):
                         // masukkan data ke database 
-                          $query = "INSERT INTO tb_buku VALUES ('', :nama_buku, :pengarang, :id_kategori, :deskripsi, :gambar)";
+                          $query = "INSERT INTO tb_buku VALUES ('', :nama_buku, :pengarang, :id_kategori, :deskripsi, :gambar, '1')";
 							$this->db->query($query);
 							$this->db->bind('nama_buku', $data['nama'] );
 							$this->db->bind('pengarang', $data['pengarang'] );
@@ -122,6 +122,31 @@ class Proses_models extends Controller
 
         $this->db->execute();
         return $this->db->rowCount();
+    }
+
+    public function addPinjam($data)
+    {
+        $query = "UPDATE tb_buku SET status = '0' WHERE id_buku = :id_buku";
+        $this->db->query($query);
+        $this->db->bind('id_buku', $data['buku']);
+
+        
+        date_default_timezone_set('Asia/Kuala_Lumpur');
+        $date = date('Y-m-d');
+        $waktu = $data['pinjam'];
+        $sampai = mktime(0,0,0,date("n"),date("j")+$waktu, date("Y"));
+        $kembali = date("Y-m-d", $sampai);
+        $query = "INSERT INTO tb_pinjam VALUES ('', :id_auth, :id_buku, :id_jurusan, '$date', '$kembali', '','0')";
+        $this->db->query($query);
+        $this->db->bind('id_auth', $data['nama']);
+        $this->db->bind('id_buku', $data['buku']);
+        $this->db->bind('id_jurusan', $data['jurusan']);
+
+        $this->db->execute();
+        return $this->db->rowCount();
+
+        
+
     }
     
     /* ------------------------------> Hapus <--------------------------------- */

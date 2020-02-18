@@ -32,6 +32,8 @@ class Get_models
         }
     }
 
+    /*-------------------------------------> ambil buku <---------------------------------------*/
+
 	public function ambilBuku()
 	{
 		$query = "SELECT * FROM tb_buku 
@@ -72,5 +74,41 @@ class Get_models
 		$this->db->query($query);
 		return $this->db->resultSet();
 	}
+
+	/*-------------------------------------> ambil pinjam <---------------------------------------*/
+
+	public function ambilPinjam()
+	{
+		$query = "SELECT * FROM tb_pinjam
+				  INNER JOIN auth ON tb_pinjam.id_auth = auth.id_auth
+				  INNER JOIN tb_buku ON tb_pinjam.id_buku  = tb_buku.id_buku";
+		$this->db->query($query);
+		return $this->db->resultSet();
+	}
     
+    public function ambilPeminjam()
+    {
+    	$query = "SELECT * FROM auth ORDER BY auth.nama ASC";
+    	$this->db->query($query);
+    	return $this->db->resultSet();
+    }
+
+    public function ambilBukuPinjam()
+    {
+    	$query = "SELECT * FROM tb_buku WHERE status = 1";
+    	$this->db->query($query);
+    	return $this->db->resultSet();
+    }
+
+    public function ambilDetailpinjam($id)
+    {
+    	$query = "SELECT * FROM tb_pinjam 
+    			  INNER JOIN auth ON tb_pinjam.id_auth = auth.id_auth
+    			  INNER JOIN tb_buku ON tb_pinjam.id_buku = tb_buku.id_buku
+    			  INNER JOIN tb_jurusan ON tb_pinjam.id_jurusan = tb_jurusan.id_jurusan WHERE id_pinjam = :id";
+    	$this->db->query($query);
+    	$this->db->bind('id',$id);
+    	return $this->db->single();
+
+    }
 }
