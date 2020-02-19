@@ -26,8 +26,8 @@ PROJEK MVC PERPUSTAKAAN BY KELOMPOK 3
 7.Generate Laporan <br>
 <br><br>
 /*rencana*/<br>
-1.print label buku<br>
-2.denda
+1.print label buku (X)<br>
+2.Fiture denda (X)
 
 /*User*/<br>
 1.Menu Daftar Buku<br>
