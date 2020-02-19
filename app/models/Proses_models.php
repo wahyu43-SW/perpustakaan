@@ -267,6 +267,23 @@ class Proses_models extends Controller
         return $this->db->rowCount();
     }
 
+    public function ubah_pinjam($data)
+    {   
+        date_default_timezone_set('Asia/Kuala_Lumpur');
+        $date = date('Y-m-d');
+        $waktu = $data['pinjam'];
+        $sampai = mktime(0,0,0,date("n"),date("j")+$waktu, date("Y"));
+        $kembali = date("Y-m-d", $sampai);
+        $query = "UPDATE tb_pinjam SET id_auth = :nama, id_buku = :buku, id_jurusan = :jurusan, tanggal_pinjam = '$date', tanggal_kembali = '$kembali' WHERE id_pinjam = :id";
+        $this->db->query($query);
+        $this->db->bind('nama', $data['nama']);
+        $this->db->bind('buku', $data['buku']);
+        $this->db->bind('jurusan', $data['jurusan']);
+        $this->db->bind('id', $data['id']);
+        $this->db->execute();
+        return $this->db->rowCount();
+
+    }   
    
 
 

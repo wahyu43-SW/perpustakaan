@@ -181,15 +181,28 @@ class Proses extends Controller
         }
     }
 
+    public function ubahPinjam()
+    {
+        if ($this->model('Proses_models')->ubah_pinjam($_POST) > 0){
+            Flasher::setFlash('berhasil', 'di ubah','success');
+            header('Location: '. BASEURL . '/peminjaman/edit');
+            exit();
+        }else {
+            Flasher::setFlash('Gagal','di ubah','danger');
+            header('Location: '. BASEURL . '/peminjaman/edit');
+            exit();
+        }
+    }
+
     public function selesai($id)
     {
         if ($this->model('Proses_models')->selesai($id) > 0){
             Flasher::setFlash('berhasil', 'di ubah','success');
-            header('Location: '. BASEURL . '/peminjaman/index');
+            header('Location: '. BASEURL . '/kembali/index');
             exit();
         }else {
             Flasher::setFlash('Gagal','di ubah','danger');
-            header('Location: '. BASEURL . '/peminjaman/index');
+            header('Location: '. BASEURL . '/kembali/index');
             exit();
         }
     }

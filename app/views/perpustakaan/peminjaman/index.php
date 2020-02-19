@@ -33,7 +33,7 @@
                             <td><?= $pinjam['tanggal_pinjam'] ?></td>
                             <td><?= $pinjam['tanggal_kembali'] ?></td>
                             <td>
-                               <a href="<?= BASEURL?>/buku/edit_buku/<?= $pinjam['id_pinjam'] ?>" class="btn btn-primary btn-ubah "><i class="fas fa-edit"></i> &nbsp;Edit</a> 
+                               <a href="<?= BASEURL?>/peminjaman/edit_pinjam/<?= $pinjam['id_pinjam'] ?>" class="btn btn-primary btn-ubah "><i class="fas fa-edit"></i> &nbsp;Edit</a> 
                                 <a href="<?= BASEURL?>/Proses/selesai/<?= $pinjam['id_pinjam'] ?>" class="btn btn-success "><i class="fas fa-check"></i> &nbsp;Kembali </a>
                                 <a href="<?= BASEURL?>/peminjaman/detail/<?= $pinjam['id_pinjam'] ?>" class="btn btn-dark "><i class="fas fa-list"></i> &nbsp;Detail</a>
                             </td>

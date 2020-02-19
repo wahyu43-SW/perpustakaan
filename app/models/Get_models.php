@@ -120,4 +120,11 @@ class Get_models
     	return $this->db->single();
 
     }
+
+    public function ambilBukuall()
+    {
+    	$query = "SELECT * FROM tb_buku";
+    	$this->db->query($query);
+    	return $this->db->resultSet();
+    }
 }

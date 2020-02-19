@@ -24,4 +24,16 @@ class Peminjaman extends Controller
 		$this->view('perpustakaan/peminjaman/detail',$data);
 		$this->view('template/footer');
     }
+
+    public function edit_pinjam($id)
+    {
+    	$data['judul'] =  "Edit Peminjam";
+    	$data['allPm'] = $this->model('Get_models')->ambilDataBy("id_pinjam",$id,"tb_pinjam");
+    	$data['peminjam'] = $this->model('Get_models')->ambilPeminjam();
+		$data['buku'] =  $this->model('Get_models')->ambilBukuall();
+		$data['jurusan'] =$this->model('Get_models')->ambilJurusan();
+    	$this->view('template/header',$data);
+		$this->view('perpustakaan/peminjaman/edit',$data);
+		$this->view('template/footer');
+    }
 }
