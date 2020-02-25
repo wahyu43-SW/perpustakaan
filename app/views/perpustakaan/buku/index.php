@@ -37,7 +37,7 @@
                                 <td><?= $buku['kategori']?> [<?= $buku['kode'] ?>]</td>
                                 <td width="20%"><?= $buku['deskripsi'] ?></td>
                                 <td><?= $buku['status'] === '1' ? "<b style='color:#1cc88a'>Ada</b>" : "<b style='color:#e74a3b'>Dipinjam</b>";?> </td>
-                                <td>
+                                <td width="30%">
                                     <a href="<?= BASEURL?>/buku/edit_buku/<?= $buku['id_buku'] ?>" class="btn btn-primary btn-ubah "><i class="fas fa-edit"></i> &nbsp;Edit</a> 
                                     <a href="<?= BASEURL?>/Proses/hapus_buku/<?= $buku['id_buku'] ?>" class="btn btn-danger tombol-hapus"><i class="fas fa-trash-alt"></i> &nbsp;Hapus </a>
                                 </td>
@@ -86,9 +86,9 @@
                        <label for="deskripsi">Deskripsi Buku</label>
                        <textarea class="form-control" id="deskripsi" name="deskripsi" cols="30" rows="5"></textarea>
                     </div>
-                     <div class="form-group">
-                       <label for="gambar">Gambar Buku</label> &nbsp;
-                       <input type="file" id="gambar" name="gambar">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="gambar" name="gambar">
+                      <label class="custom-file-label" for="gambar" name="gambar">Pilih Gambar</label>
                     </div>
             </div>
             <div class="modal-footer">

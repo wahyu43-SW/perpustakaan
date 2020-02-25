@@ -23,13 +23,19 @@
                     <div class="form-group">
                        <label for="kelas">Kelas</label>
                         <select name="kelas" id="kelas" class="form-control">
-                            <option value="">Pilih Kelas</option>
-                            <option value="X">X</option>
-                            <option <?= $data['user']['kelas'] ? "selected" : ""; ?>  value="<?= $data['user']['kelas'] ?>"> <?= $data['user']['kelas'] ?></option>
-                            <option value="XII">XII</option>
-                            <!-- <option value="10">X</option>
-                            <option value="11">XI</option>
-                            <option value="12">XII</option> -->
+                            <?php if ($data['user']['kelas']  == "X") :?>
+                                  <option value="X">X</option>
+                                  <option value="XI">XI</option>
+                                  <option value="XII">XII</option>
+                            <?php elseif ($data['user']['kelas']  == "XI"): ?>
+                                   <option value="XI">XI</option>
+                                   <option value="X">X</option>
+                                   <option value="XII">XII</option>
+                            <?php else: ?>
+                                   <option value="XII">XII</option>
+                                   <option value="X">X</option>
+                                   <option value="XI">XI</option>
+                            <?php endif; ?>
                         </select>
                     </div>
                     <div class="form-group">

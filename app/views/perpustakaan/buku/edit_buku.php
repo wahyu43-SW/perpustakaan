@@ -6,7 +6,7 @@
         <div class="card shadow mb-4 ">
 
             <div class="card-body ">
-                <form action="<?= BASEURL ?>/proses/editbuku" method="POST">
+                <form action="<?= BASEURL ?>/proses/editbuku" method="POST" enctype="multipart/form-data">
                     <input type="hidden" id="id" name="id" value=" <?= $data['buku']['id_buku'] ?> ">
                         <div class="form-group">
                             <label for="nama">Nama Buku</label>
@@ -36,8 +36,8 @@
                         </div>
                          <div class="form-group text-center">
                             <img src="<?= BASEURL ?>/img/daftar-buku/<?= $data['buku']['gambar'] ?>" alt="" width="50%"><br><br>
-                       <label for="gambar" style="margin-left: 7rem">Gambar Buku</label> &nbsp;
-                       <input type="file" id="gambar" name="gambar">
+                           <label for="gambar" style="margin-left: 7rem" name="gambar">Gambar Buku</label> &nbsp;
+                           <input type="file" id="gambar" name="gambar">
                     </div>
                 </div>
                 <div class="modal-footer">

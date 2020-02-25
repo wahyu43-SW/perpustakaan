@@ -13,6 +13,7 @@
                             <th>Nama</th>
                             <th>Buku</th>
                             <th>Tanggal Kembali</th>
+                            <th>Denda</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -24,6 +25,7 @@
                             <td><?= $pinjam['nama'] ?></td>
                             <td><?= $pinjam['nama_buku'] ?></td>
                             <td><?= $pinjam['tanggal_kembali'] ?></td>
+                            <td>Rp <?= $pinjam['denda'] ?></td>
                             <td>
                                 <a href="<?= BASEURL?>/Proses/selesai_kembali/<?= $pinjam['id_pinjam'] ?>" class="btn btn-danger "><i class="fas fa-trash-alt"></i> &nbsp;Hapus</a>
                             </td>

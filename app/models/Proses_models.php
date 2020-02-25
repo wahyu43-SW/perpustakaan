@@ -121,11 +121,12 @@ class Proses_models extends Controller
         $waktu = $data['pinjam'];
         $sampai = mktime(0,0,0,date("n"),date("j")+$waktu, date("Y"));
         $kembali = date("Y-m-d", $sampai);
-        $query = "INSERT INTO tb_pinjam VALUES ('', :id_auth, :id_buku, :id_jurusan, '$date', '$kembali', '','0')";
+        $query = "INSERT INTO tb_pinjam VALUES ('', :id_auth, :id_buku, :id_jurusan, '$date', '$kembali', :lama_pinjam, '','0')";
         $this->db->query($query);
         $this->db->bind('id_auth', $data['nama']);
         $this->db->bind('id_buku', $data['buku']);
         $this->db->bind('id_jurusan', $data['jurusan']);
+        $this->db->bind('lama_pinjam', $data['pinjam']);
 
 
         $this->db->execute();
@@ -198,16 +199,76 @@ class Proses_models extends Controller
 
     public function editbuku($data)
 	{
-		$query = "UPDATE tb_buku SET nama_buku = :nama_buku, pengarang = :pengarang, id_kategori = :id_kategori, deskripsi = :deskripsi WHERE id_buku = :id_buku";
-		$this->db->query($query);
-		$this->db->bind('nama_buku', $data['nama'] );
-		$this->db->bind('pengarang', $data['pengarang'] );
-		$this->db->bind('id_kategori', $data['kategori'] );
-		$this->db->bind('deskripsi', $data['deskripsi'] );
-		$this->db->bind('id_buku', $data['id']);
+        $query = "SELECT * FROM tb_buku WHERE id_buku = :id";
+        $this->db->query($query);
+        $this->db->bind('id', $data['id']);
+        $data = $this->db->single();
+        
+        if (empty($_FILES['gambar'])) {
+            
+        $destination = "img/daftar-buku/";
+        unlink($destination.$data['gambar']);
 
-		$this->db->execute();
-		return $this->db->rowCount();
+
+        $file_max_weight = 1000000; //limmit gambar
+
+        $ok_ext = array('jpg','png','gif','jpeg'); // gambar yang diterima
+
+        $file = $_FILES['gambar'];
+
+
+        $filename = explode(".", $file["name"]); 
+
+
+        $file_name = $file['name']; // nama asli gambar
+
+
+        $file_name_no_ext = isset($filename[0]) ? $filename[0] : null; 
+
+        $file_extension = $filename[count($filename)-1];
+
+        $file_weight = $file['size'];
+
+        $file_type = $file['type'];
+
+        if ($file['error'] == 0 ) {
+
+            if (in_array($file_extension, $ok_ext)) {
+                 if( $file_weight <= $file_max_weight ){
+                     $fileNewName =  $file_name_no_ext[0].microtime().'.'.$file_extension ;
+
+
+                        // pindahin ke folder baru
+                        if( move_uploaded_file($file['tmp_name'], $destination.$fileNewName) ){
+                        // masukkan data ke database 
+                            $query = "UPDATE tb_buku SET nama_buku = :nama_buku, pengarang = :pengarang, id_kategori = :id_kategori, deskripsi = :deskripsi, gambar = :gambar WHERE id_buku = :id_buku";
+                            $this->db->query($query);
+                            $this->db->bind('nama_buku', $data['nama'] );
+                            $this->db->bind('pengarang', $data['pengarang'] );
+                            $this->db->bind('id_kategori', $data['kategori'] );
+                            $this->db->bind('deskripsi', $data['deskripsi'] );
+                            $this->db->bind('gambar',  $fileNewName);
+                            $this->db->bind('id_buku', $data['id']);
+
+                            $this->db->execute();
+                            return $this->db->rowCount();
+                        }else{
+                            $error = "File melebihi Kapasitas"; 
+                            var_dump($error);die;
+                        }
+                 }else{
+                    $error = "File melebihi Kapasitas"; 
+                    var_dump($error);die;
+                 }
+            }else {
+                $error = "Extensi Gambar salah"; 
+                var_dump($error);die;
+            }
+            
+        }
+        }
+
+		
 	}
 
     public function edit_user($data)
@@ -249,22 +310,41 @@ class Proses_models extends Controller
 
     public function selesai($id)
     {
-
-        $query = "UPDATE tb_pinjam SET keadaan = '1' WHERE id_pinjam = $id";
-        $this->db->query($query);
-        $this->db->execute();
-
         $query = "SELECT * FROM tb_pinjam WHERE id_pinjam = $id";
         $this->db->query($query);
         $this->db->execute();
         $data = $this->db->single();
 
+        $date = date('Y-m-d');
+        $lama_pinjam = $data['lama_pinjam'];
+        $tanggal_pinjam = strtotime($data['tanggal_pinjam']);
+        $tanggal_kembali = strtotime($data['tanggal_kembali']);
+        $harus_kembali = strtotime($date);
+
+        $selisih = (abs($tanggal_kembali - $harus_kembali));
+        $hitung_hari = floor($selisih/(60*60*24));
+
+        $selisih2 = (abs($tanggal_pinjam - $tanggal_kembali));
+        $sampai = floor($selisih2/(60*60*24));
+        if( $sampai > $hitung_hari ){
+            $denda = 1000 * $hitung_hari;
+        }else{
+            $denda = 0;
+        }
+        $query = "UPDATE tb_pinjam SET denda = '$denda',keadaan = '1' WHERE id_pinjam = $id";
+        $this->db->query($query);
+        $this->db->execute();
+
+        
         $buku = $data['id_buku'];
 
         $query = "UPDATE tb_buku SET status = '1' WHERE id_buku = $buku";
         $this->db->query($query);
         $this->db->execute();
-        return $this->db->rowCount();
+        return $this->db->rowCount();   
+
+
+
     }
 
     public function ubah_pinjam($data)
