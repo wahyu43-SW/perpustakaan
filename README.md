@@ -4,7 +4,7 @@
 
 PROJEK MVC PERPUSTAKAAN BY KELOMPOK 3
 <br><br>
-1.Budi Sucita<br>
+1.Wayan Budi Sucita<br>
 2.I Wayan Wipram Sembah klan Gamurci <br>
 3.Kadek Dwipayana Putra <br>
 4.Made Wahyu Purnama Putra <br>
