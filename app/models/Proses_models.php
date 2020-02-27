@@ -320,17 +320,19 @@ class Proses_models extends Controller
         $tanggal_pinjam = strtotime($data['tanggal_pinjam']);
         $tanggal_kembali = strtotime($data['tanggal_kembali']);
         $harus_kembali = strtotime($date);
-
-        $selisih = (abs($tanggal_kembali - $harus_kembali));
-        $hitung_hari = floor($selisih/(60*60*24));
-
+        // var_dump($tanggal_kembali);var_dump($harus_kembali);die;
+        $selisih = $harus_kembali -  $tanggal_kembali;
+        // var_dump($selisih);die;
+        $hitung_hari = floor($selisih/(60*60*24)); //20
+        // var_dump($hitung_hari);die;
         $selisih2 = (abs($tanggal_pinjam - $tanggal_kembali));
-        $sampai = floor($selisih2/(60*60*24));
-        if( $sampai > $hitung_hari ){
+        $sampai = floor($selisih2/(60*60*24)); //12
+        if($hitung_hari > 0){
             $denda = 1000 * $hitung_hari;
         }else{
             $denda = 0;
         }
+        // var_dump($denda);die;
         $query = "UPDATE tb_pinjam SET denda = '$denda',keadaan = '1' WHERE id_pinjam = $id";
         $this->db->query($query);
         $this->db->execute();
