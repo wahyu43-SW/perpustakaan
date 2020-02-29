@@ -1,4 +1,3 @@
-<?php  ?>
 <!DOCTYPE html>
 <html lang="en">
  
@@ -24,6 +23,9 @@
 </head>
 
 <body id="page-top">
+   <div class="row">
+        <div class="flash-data" data-flashdata="<?= Flasher::flash(true); ?>"></div>
+    </div>
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -44,7 +46,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="index.php">
+        <a class="nav-link" href="<?= BASEURL ?>">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>

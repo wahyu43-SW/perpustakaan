@@ -27,14 +27,22 @@
                                   <option value="X">X</option>
                                   <option value="XI">XI</option>
                                   <option value="XII">XII</option>
+                                  <option value="0">Petugas</option>
                             <?php elseif ($data['user']['kelas']  == "XI"): ?>
                                    <option value="XI">XI</option>
                                    <option value="X">X</option>
                                    <option value="XII">XII</option>
-                            <?php else: ?>
+                                   <option value="0">Petugas</option>
+                            <?php elseif ($data['user']['kelas']  == "XII"):?>
                                    <option value="XII">XII</option>
                                    <option value="X">X</option>
                                    <option value="XI">XI</option>
+                                   <option value="0">Petugas</option>
+                            <?php else: ?>
+                                   <option value="0">Petugas</option>
+                                   <option value="X">X</option>
+                                   <option value="XI">XI</option>
+                                   <option value="XII">XII</option>
                             <?php endif; ?>
                         </select>
                     </div>

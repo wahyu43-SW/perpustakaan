@@ -127,4 +127,33 @@ class Get_models
     	$this->db->query($query);
     	return $this->db->resultSet();
     }
+
+    /*-------------------------------------> Count <---------------------------------------*/
+    public function countBuku()
+    {
+    	$query = "SELECT COUNT(*) FROM tb_buku";
+    	$this->db->query($query);
+    	return $this->db->resultarray();
+    }
+
+    public function countuser()
+    {
+    	$query = "SELECT COUNT(*) FROM auth";
+    	$this->db->query($query);
+    	return $this->db->resultarray();
+    }
+
+    public function countpeminjaman()
+    {
+    	$query = "SELECT COUNT(*) FROM tb_pinjam WHERE keadaan = '0'";
+    	$this->db->query($query);
+    	return $this->db->resultarray();
+    }
+
+    public function countpengembalian()
+    {
+    	$query = "SELECT COUNT(*) FROM tb_pinjam WHERE keadaan = '1'";
+    	$this->db->query($query);
+    	return $this->db->resultarray();
+    }
 }

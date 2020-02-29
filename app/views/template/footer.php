@@ -69,15 +69,16 @@
             pagingType: 'full_numbers'
         });
 
-        const  flashData = $('.flash-data').data('flashdata');
+         const  flashData = $('.flash-data').data('flashdata');
         if (flashData) {
           Swal.fire({
-            title: 'Data Perpustakaan',
-            text: 'Berhasil ' + flashData,
-            icon: 'success',
-            type: 'success'
+            title: 'Data Manajement',
+            text: flashData.pesan + flashData.aksi,
+            icon: flashData.tipe,
+            type: flashData.tipe
           })
         } 
+        
           $('.tombol-hapus').on('click', function(e){
 
           e.preventDefault();

@@ -6,6 +6,11 @@
         <div class="card shadow mb-4 ">
 
             <div class="card-body ">
+                <div class="d-flex justify-content-end">
+                    <a href="<?= BASEURL ?>/buku/" style="text-decoration: none; color: #989898; ">
+                        <i class="fas fa-times"></i>
+                    </a>
+                </div>
                 <form action="<?= BASEURL ?>/proses/editbuku" method="POST" enctype="multipart/form-data">
                     <input type="hidden" id="id" name="id" value=" <?= $data['buku']['id_buku'] ?> ">
                         <div class="form-group">

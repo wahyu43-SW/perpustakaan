@@ -72,6 +72,10 @@
                        <label for="password">Password</label>
                        <input type="password" class="form-control" id="password" name="password">
                     </div>
+                     <div class="form-group">
+                       <label for="password">Konfirmasi Password</label>
+                       <input type="password" class="form-control" id="password" name="password_konf">
+                    </div>
                     <div class="form-group">
                        <label for="level">Level</label>
                         <select name="level" id="level" class="form-control">
@@ -85,12 +89,13 @@
                     </div>
                     <div class="form-group">
                        <label for="nis">Nis</label>
-                       <input type="text" class="form-control" id="nis" name="nis">
+                       <input type="number" class="form-control" id="nis" name="nis">
                     </div>
                     <div class="form-group">
                        <label for="kelas">Kelas</label>
                         <select name="kelas" id="kelas" class="form-control">
                             <option value="">Pilih Kelas</option>
+                            <option value="0">Petugas</option>
                             <option value="X">X</option>
                             <option value="XI">XI</option>
                             <option value="XII">XII</option>

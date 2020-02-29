@@ -45,7 +45,9 @@ class Proses_models extends Controller
                         // pindahin ke folder baru
                         if( move_uploaded_file($file['tmp_name'], $destination.$fileNewName) ){
                         // masukkan data ke database 
+                        
                           $query = "INSERT INTO tb_buku VALUES ('', :nama_buku, :pengarang, :id_kategori, :deskripsi, :gambar, '1')";
+                          try{
                             $this->db->query($query);
                             $this->db->bind('nama_buku', $data['nama'] );
                             $this->db->bind('pengarang', $data['pengarang'] );
@@ -54,7 +56,11 @@ class Proses_models extends Controller
                             $this->db->bind('gambar', $fileNewName);
 
                             $this->db->execute();
-                            return $this->db->rowCount();
+                            // return $this->db->rowCount();
+                            return ['status' => true];
+                            } catch (PDOException $e) {
+                              return ['status' => false, 'msg' => $e->getMessage()];
+                            }
                         }else{
                             $error = "File melebihi Kapasitas"; 
                             var_dump($error);die;
@@ -74,38 +80,75 @@ class Proses_models extends Controller
 	public function addkategori($data)
 	{
 		$query = "INSERT INTO tb_kategori VALUES ('', :kategori, :kode)";
+        try{
 		$this->db->query($query);
 		$this->db->bind('kategori', $data['kategori'] );
 		$this->db->bind('kode', $data['kode'] );
 
 		$this->db->execute();
-		return $this->db->rowCount();
+		// return $this->db->rowCount();
+         return ['status' => true];
+        } catch (PDOException $e) {
+          return ['status' => false, 'msg' => $e->getMessage()];
+        } 
 	}
 
     public function addUser($data)
     {
+
+        $username = strtolower(stripcslashes($data['username']));
+        $nama = stripcslashes($data['nama']);
+        $password = $data['password'];
+        $password_konf = $data['password_konf'];
+
+        $queryu = "SELECT username FROM auth WHERE username = '$username'";
+        $this->db->query($queryu);
+        $cek_username = $this->db->single();
+
+        if ($cek_username > 0) {
+            Flasher::setFlash('Username Anda ','Sudah Terdaftar','error');
+             header('Location: '. BASEURL . '/user/index');
+            exit();
+        }
+
+        if ($password !== $password_konf) {
+             Flasher::setFlash('Password Anda ','Harus Sama','error');
+              header('Location: '. BASEURL . '/user/index');
+            exit();
+        }
+
         $query =  "INSERT INTO auth VALUES ('',:nama , :nis, :kelas, :username, :password, :id_level, :id_jurusan)";
+        try{
         $this->db->query($query);
-        $this->db->bind('nama',  $data['nama']);
+        $this->db->bind('nama',  $nama);
         $this->db->bind('nis',  $data['nis']);
         $this->db->bind('kelas',  $data['kelas']);
-        $this->db->bind('username',  $data['username']);
-        $this->db->bind('password',  password_hash($data['password'], PASSWORD_DEFAULT));
+        $this->db->bind('username',  $username);
+        $this->db->bind('password',  password_hash($password, PASSWORD_DEFAULT));
         $this->db->bind('id_level',  $data['level']);
         $this->db->bind('id_jurusan',  $data['jurusan']);
 
         $this->db->execute();
-        return $this->db->rowCount();
+        // return $this->db->rowCount();
+          return ['status' => true];
+        } catch (PDOException $e) {
+          return ['status' => false, 'msg' => $e->getMessage()];
+        } 
     }
 
     public function addJurusan($data)
     {
         $query = "INSERT INTO tb_jurusan VALUES ('', :jurusan)";
+        try{
         $this->db->query($query);
         $this->db->bind('jurusan', $data['jurusan'] );
 
         $this->db->execute();
-        return $this->db->rowCount();
+        // return $this->db->rowCount();
+          return ['status' => true];
+        } catch (PDOException $e) {
+          return ['status' => false, 'msg' => $e->getMessage()];
+        } 
     }
 
     public function addPinjam($data)
@@ -122,15 +165,20 @@ class Proses_models extends Controller
         $sampai = mktime(0,0,0,date("n"),date("j")+$waktu, date("Y"));
         $kembali = date("Y-m-d", $sampai);
         $query = "INSERT INTO tb_pinjam VALUES ('', :id_auth, :id_buku, :id_jurusan, '$date', '$kembali', :lama_pinjam, '','0')";
-        $this->db->query($query);
-        $this->db->bind('id_auth', $data['nama']);
-        $this->db->bind('id_buku', $data['buku']);
-        $this->db->bind('id_jurusan', $data['jurusan']);
-        $this->db->bind('lama_pinjam', $data['pinjam']);
+        try{
+            $this->db->query($query);
+            $this->db->bind('id_auth', $data['nama']);
+            $this->db->bind('id_buku', $data['buku']);
+            $this->db->bind('id_jurusan', $data['jurusan']);
+            $this->db->bind('lama_pinjam', $data['pinjam']);
 
 
-        $this->db->execute();
-        return $this->db->rowCount();
+            $this->db->execute();
+            // return $this->db->rowCount();
+          return ['status' => true];
+        } catch (PDOException $e) {
+          return ['status' => false, 'msg' => $e->getMessage()];
+        } 
         
 
     }
@@ -140,6 +188,7 @@ class Proses_models extends Controller
     public function hapus_buku($id)
     {
     	$query = "SELECT * FROM tb_buku WHERE id_buku = :id";
+        try{
         $this->db->query($query);
         $this->db->bind('id', $id);
         $data = $this->db->single();
@@ -153,71 +202,92 @@ class Proses_models extends Controller
     	$this->db->bind('id', $id);
     	
     	$this->db->execute();
-    	return $this->db->rowCount();
+    	// return $this->db->rowCount();
+          return ['status' => true];
+        } catch (PDOException $e) {
+          return ['status' => false, 'msg' => $e->getMessage()];
+        } 
     }
 
     public function hapus_user($id)
     {
         $query =  "DELETE FROM auth WHERE id_auth = :id";
+        try{
         $this->db->query($query);
         $this->db->bind('id', $id);
 
         $this->db->execute();
-        return $this->db->rowCount();
+        // return $this->db->rowCount();
+          return ['status' => true];
+        } catch (PDOException $e) {
+          return ['status' => false, 'msg' => $e->getMessage()];
+        } 
     }
 
     public function hapus_kategori($id)
     {
         $query =  "DELETE FROM tb_kategori WHERE id_kategori = :id";
+        try{
         $this->db->query($query);
         $this->db->bind('id', $id);
 
         $this->db->execute();
-        return $this->db->rowCount();
+        // return $this->db->rowCount();
+          return ['status' => true];
+        } catch (PDOException $e) {
+          return ['status' => false, 'msg' => $e->getMessage()];
+        } 
     }
 
     public function hapus_jurusan($id)
     {
         $query =  "DELETE FROM tb_jurusan WHERE id_jurusan = :id";
+        try{
         $this->db->query($query);
         $this->db->bind('id', $id);
 
         $this->db->execute();
-        return $this->db->rowCount();
+        // return $this->db->rowCount();
+          return ['status' => true];
+        } catch (PDOException $e) {
+          return ['status' => false, 'msg' => $e->getMessage()];
+        } 
     }
 
     public function selesai_kembali($id)
     {
 
         $query = "DELETE FROM tb_pinjam WHERE id_pinjam = $id";
+        try{
         $this->db->query($query);
         $this->db->execute();
-        return $this->db->rowCount();
+        // return $this->db->rowCount();
+          return ['status' => true];
+        } catch (PDOException $e) {
+          return ['status' => false, 'msg' => $e->getMessage()];
+        } 
     }
 
     /* ------------------------------> Edit <--------------------------------- */
 
     public function editbuku($data)
 	{
+        // var_dump($data);die;
         $query = "SELECT * FROM tb_buku WHERE id_buku = :id";
         $this->db->query($query);
         $this->db->bind('id', $data['id']);
-        $data = $this->db->single();
-        
-        if (empty($_FILES['gambar'])) {
-            
-        $destination = "img/daftar-buku/";
-        unlink($destination.$data['gambar']);
-
+        $dataambil = $this->db->single();
 
         $file_max_weight = 1000000; //limmit gambar
 
         $ok_ext = array('jpg','png','gif','jpeg'); // gambar yang diterima
 
+        $destination = "img/daftar-buku/"; // simpen dmana nantik
+
         $file = $_FILES['gambar'];
 
 
-        $filename = explode(".", $file["name"]); 
+        $filename = explode(".", $file['name']); 
 
 
         $file_name = $file['name']; // nama asli gambar
@@ -231,42 +301,48 @@ class Proses_models extends Controller
 
         $file_type = $file['type'];
 
-        if ($file['error'] == 0 ) {
+       
+        unlink($destination.$dataambil['gambar']); //data gambar database
+            if ($file['error'] == 0 ) {
 
-            if (in_array($file_extension, $ok_ext)) {
-                 if( $file_weight <= $file_max_weight ){
-                     $fileNewName =  $file_name_no_ext[0].microtime().'.'.$file_extension ;
+                if (in_array($file_extension, $ok_ext)) {
 
+                     if( $file_weight <= $file_max_weight ){
 
-                        // pindahin ke folder baru
-                        if( move_uploaded_file($file['tmp_name'], $destination.$fileNewName) ){
-                        // masukkan data ke database 
-                            $query = "UPDATE tb_buku SET nama_buku = :nama_buku, pengarang = :pengarang, id_kategori = :id_kategori, deskripsi = :deskripsi, gambar = :gambar WHERE id_buku = :id_buku";
-                            $this->db->query($query);
-                            $this->db->bind('nama_buku', $data['nama'] );
-                            $this->db->bind('pengarang', $data['pengarang'] );
-                            $this->db->bind('id_kategori', $data['kategori'] );
-                            $this->db->bind('deskripsi', $data['deskripsi'] );
-                            $this->db->bind('gambar',  $fileNewName);
-                            $this->db->bind('id_buku', $data['id']);
-
-                            $this->db->execute();
-                            return $this->db->rowCount();
-                        }else{
-                            $error = "File melebihi Kapasitas"; 
-                            var_dump($error);die;
-                        }
-                 }else{
-                    $error = "File melebihi Kapasitas"; 
+                         $fileNewName =  $file_name_no_ext[0].microtime().'.'.$file_extension ;
+                            // pindahin ke folder baru
+                            if( move_uploaded_file($file['tmp_name'], $destination.$fileNewName) ){
+                            // masukkan data ke database 
+                              $query = "UPDATE tb_buku SET nama_buku =:nama_buku, pengarang =:pengarang, id_kategori =:id_kategori, deskripsi =:deskripsi, gambar =:gambar WHERE id_buku =:id_buku";
+                              try{
+                                $this->db->query($query);
+                                $this->db->bind('nama_buku', $data["nama"]);
+                                $this->db->bind('pengarang', $data["pengarang"]);
+                                $this->db->bind('id_kategori', $data["kategori"]);
+                                $this->db->bind('deskripsi', $data["deskripsi"]);
+                                $this->db->bind('gambar', $fileNewName);
+                                $this->db->bind('id_buku', $data["id"] );
+                                $this->db->execute();
+                                // return $this->db->rowCount();
+                                return ['status' => true];
+                                } catch (PDOException $e) {
+                                  return ['status' => false, 'msg' => $e->getMessage()];
+                                }
+                            }else{
+                                $error = "File melebihi Kapasitas"; 
+                                var_dump($error);die;
+                            }
+                     }else{
+                        $error = "File melebihi Kapasitas"; 
+                        var_dump($error);die;
+                     }
+                }else {
+                    $error = "Extensi Gambar salah"; 
                     var_dump($error);die;
-                 }
-            }else {
-                $error = "Extensi Gambar salah"; 
-                var_dump($error);die;
+                }
+                
             }
-            
-        }
-        }
+        
 
 		
 	}
@@ -274,6 +350,7 @@ class Proses_models extends Controller
     public function edit_user($data)
     {
         $query = "UPDATE auth SET nama = :nama, nis = :nis, kelas = :kelas, id_jurusan = :id_jurusan WHERE id_auth = :id_auth";
+        try{
         $this->db->query($query);
         $this->db->bind('nama', $data['nama'] );
         $this->db->bind('nis', $data['nis'] );
@@ -282,30 +359,44 @@ class Proses_models extends Controller
         $this->db->bind('id_auth', $data['id']);
 
         $this->db->execute();
-        return $this->db->rowCount();
+        // return $this->db->rowCount();
+          return ['status' => true];
+        } catch (PDOException $e) {
+          return ['status' => false, 'msg' => $e->getMessage()];
+        } 
     }
 
     public function edit_kategori($data)
     {
         $query = "UPDATE tb_kategori SET kategori = :kategori, kode = :kode WHERE id_kategori = :id_kategori";
+        try{
         $this->db->query($query);
-        $this->db->bind('kategori', $data['kategori'] );
-        $this->db->bind('kode', $data['kode'] );
+        $this->db->bind('kategori', $data['kategori']);
+        $this->db->bind('kode', $data['kode']);
         $this->db->bind('id_kategori', $data['id']);
 
         $this->db->execute();
-        return $this->db->rowCount();
+        // return $this->db->rowCount();
+          return ['status' => true];
+        } catch (PDOException $e) {
+          return ['status' => false, 'msg' => $e->getMessage()];
+        } 
     }
 
     public function edit_jurusan($data)
     {
         $query = "UPDATE tb_jurusan SET jurusan = :jurusan  WHERE id_jurusan = :id";
+        try{
         $this->db->query($query);
         $this->db->bind('jurusan', $data['jurusan'] );
         $this->db->bind('id', $data['id']);
 
         $this->db->execute();
-        return $this->db->rowCount();
+        // return $this->db->rowCount();
+          return ['status' => true];
+        } catch (PDOException $e) {
+          return ['status' => false, 'msg' => $e->getMessage()];
+        } 
     }
 
     public function selesai($id)
@@ -321,9 +412,9 @@ class Proses_models extends Controller
         $tanggal_kembali = strtotime($data['tanggal_kembali']);
         $harus_kembali = strtotime($date);
         // var_dump($tanggal_kembali);var_dump($harus_kembali);die;
-        $selisih = $harus_kembali -  $tanggal_kembali;
+        $selisih = $harus_kembali -  $tanggal_kembali ;
         // var_dump($selisih);die;
-        $hitung_hari = floor($selisih/(60*60*24)); //20
+        $hitung_hari = floor($selisih/(60*60*24) + 1); //20
         // var_dump($hitung_hari);die;
         $selisih2 = (abs($tanggal_pinjam - $tanggal_kembali));
         $sampai = floor($selisih2/(60*60*24)); //12
@@ -334,6 +425,7 @@ class Proses_models extends Controller
         }
         // var_dump($denda);die;
         $query = "UPDATE tb_pinjam SET denda = '$denda',keadaan = '1' WHERE id_pinjam = $id";
+        try{
         $this->db->query($query);
         $this->db->execute();
 
@@ -343,7 +435,11 @@ class Proses_models extends Controller
         $query = "UPDATE tb_buku SET status = '1' WHERE id_buku = $buku";
         $this->db->query($query);
         $this->db->execute();
-        return $this->db->rowCount();   
+        // return $this->db->rowCount();
+          return ['status' => true];
+        } catch (PDOException $e) {
+          return ['status' => false, 'msg' => $e->getMessage()];
+        }    
 
 
 
@@ -357,13 +453,18 @@ class Proses_models extends Controller
         $sampai = mktime(0,0,0,date("n"),date("j")+$waktu, date("Y"));
         $kembali = date("Y-m-d", $sampai);
         $query = "UPDATE tb_pinjam SET id_auth = :nama, id_buku = :buku, id_jurusan = :jurusan, tanggal_pinjam = '$date', tanggal_kembali = '$kembali' WHERE id_pinjam = :id";
+        try{
         $this->db->query($query);
         $this->db->bind('nama', $data['nama']);
         $this->db->bind('buku', $data['buku']);
         $this->db->bind('jurusan', $data['jurusan']);
         $this->db->bind('id', $data['id']);
         $this->db->execute();
-        return $this->db->rowCount();
+        // return $this->db->rowCount();
+          return ['status' => true];
+        } catch (PDOException $e) {
+          return ['status' => false, 'msg' => $e->getMessage()];
+        } 
 
     }   
    
