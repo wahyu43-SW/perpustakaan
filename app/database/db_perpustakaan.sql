@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 26 Feb 2020 pada 02.46
+-- Waktu pembuatan: 01 Mar 2020 pada 01.38
 -- Versi server: 10.4.6-MariaDB
 -- Versi PHP: 7.3.9
 
@@ -44,8 +44,9 @@ CREATE TABLE `auth` (
 --
 
 INSERT INTO `auth` (`id_auth`, `nama`, `nis`, `kelas`, `username`, `password`, `id_level`, `id_jurusan`) VALUES
-(4, 'wahyu purnama', 27257, 'XII', 'wahyu', '$2y$10$zOXsSn5AGknqX0lmwl0yeu/XardR/ZKEybj7Ekq24efM/0jOFpCrK', 1, 1),
-(5, 'Yudha Adistara', 27259, 'XI', 'Yudha', '$2y$10$ZF.CO5CGqadKmXP00hjmnef3bByqmYefV3jN6cQS7vGxMoYKoWesO', 3, 5);
+(14, 'Admin', 0, '0', 'admin', '$2y$10$AOlxv4Mdngz2ojF052lfkOPSc7tUDHKj5I0dOmlSrBEqr8Wou2DDi', 1, 7),
+(16, 'wahyu purnama', 27257, 'XI', 'wahyu', '$2y$10$7wJ9H6MEszGi439K8V/Mq.FsSaDzQz9dKjqU7g2L72w7ZJUUcQtZa', 3, 1),
+(17, 'qwdas', 27257, 'XI', 'ghnj', '$2y$10$XuPzq7GjSCrMd2gvxi2bx.PLkAMuRJAIJSwWGOOt56fYjiHQGhifa', 3, 6);
 
 -- --------------------------------------------------------
 
@@ -60,15 +61,17 @@ CREATE TABLE `tb_buku` (
   `id_kategori` int(11) NOT NULL,
   `deskripsi` text NOT NULL,
   `gambar` varchar(50) NOT NULL,
-  `status` tinyint(2) NOT NULL COMMENT '0=Dipinjam, 1=Ada'
+  `jumlah_buku` int(11) NOT NULL,
+  `kondisi_buku` tinyint(2) NOT NULL COMMENT '1 = baik,  0 =  rusak'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `tb_buku`
 --
 
-INSERT INTO `tb_buku` (`id_buku`, `nama_buku`, `pengarang`, `id_kategori`, `deskripsi`, `gambar`, `status`) VALUES
-(59, 'sad', 'adas', 2, 'asdas', 'b0.59715300 1582588942.jpg', 1);
+INSERT INTO `tb_buku` (`id_buku`, `nama_buku`, `pengarang`, `id_kategori`, `deskripsi`, `gambar`, `jumlah_buku`, `kondisi_buku`) VALUES
+(85, 'ad', 'saas', 8, 'fdgd', 'b0.28935400 1582985950.jpg', 0, 1),
+(86, 'ger', 'gtr', 8, 'fgbf', 'm0.38233200 1582985967.jpg', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -89,7 +92,8 @@ INSERT INTO `tb_jurusan` (`id_jurusan`, `jurusan`) VALUES
 (1, 'Rekayasa Perangkat Lunak'),
 (2, 'Multimedia'),
 (3, 'Teknik Komputer Jaringan'),
-(5, 'Teknik Kendaraan Ringan');
+(6, 'Audio Video'),
+(7, 'Petugas');
 
 -- --------------------------------------------------------
 
@@ -108,10 +112,30 @@ CREATE TABLE `tb_kategori` (
 --
 
 INSERT INTO `tb_kategori` (`id_kategori`, `kategori`, `kode`) VALUES
-(1, 'PBO', '001'),
-(2, 'Biologi', '002'),
-(3, 'kimia', '003'),
-(5, 'bahasa', '005');
+(8, 'agama', '200');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_kembali`
+--
+
+CREATE TABLE `tb_kembali` (
+  `id_kembali` int(11) NOT NULL,
+  `id_auth` int(11) NOT NULL,
+  `id_buku` int(11) NOT NULL,
+  `id_jurusan` int(11) NOT NULL,
+  `tanggal_pinjam` date NOT NULL,
+  `tanggal_kembali` date NOT NULL,
+  `denda` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tb_kembali`
+--
+
+INSERT INTO `tb_kembali` (`id_kembali`, `id_auth`, `id_buku`, `id_jurusan`, `tanggal_pinjam`, `tanggal_kembali`, `denda`) VALUES
+(17, 14, 85, 1, '2020-02-29', '2020-03-02', 0);
 
 -- --------------------------------------------------------
 
@@ -147,17 +171,35 @@ CREATE TABLE `tb_pinjam` (
   `tanggal_pinjam` date NOT NULL DEFAULT current_timestamp(),
   `tanggal_kembali` date NOT NULL,
   `lama_pinjam` int(11) NOT NULL,
-  `denda` int(11) NOT NULL,
-  `keadaan` tinyint(2) NOT NULL COMMENT '0=Dipinjam, 1=Ada'
+  `denda` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `tb_pinjam`
 --
 
-INSERT INTO `tb_pinjam` (`id_pinjam`, `id_auth`, `id_buku`, `id_jurusan`, `tanggal_pinjam`, `tanggal_kembali`, `lama_pinjam`, `denda`, `keadaan`) VALUES
-(87, 4, 59, 1, '2020-02-25', '2020-03-04', 8, 0, 1),
-(88, 4, 59, 1, '2020-02-25', '2020-03-06', 10, 4000, 1);
+INSERT INTO `tb_pinjam` (`id_pinjam`, `id_auth`, `id_buku`, `id_jurusan`, `tanggal_pinjam`, `tanggal_kembali`, `lama_pinjam`, `denda`) VALUES
+(13, 14, 86, 1, '2020-02-29', '2020-03-01', 1, 0),
+(15, 14, 85, 1, '2020-02-29', '2020-03-01', 1, 0);
+
+--
+-- Trigger `tb_pinjam`
+--
+DELIMITER $$
+CREATE TRIGGER `kembali` AFTER UPDATE ON `tb_pinjam` FOR EACH ROW BEGIN
+ UPDATE tb_buku SET jumlah_buku = jumlah_buku+1 WHERE id_buku = id_buku;
+ END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `pinjam` AFTER INSERT ON `tb_pinjam` FOR EACH ROW BEGIN
+ UPDATE tb_buku
+ SET jumlah_buku = jumlah_buku - 1
+ WHERE
+ id_buku = NEW.id_buku;
+ END
+$$
+DELIMITER ;
 
 --
 -- Indexes for dumped tables
@@ -191,6 +233,15 @@ ALTER TABLE `tb_kategori`
   ADD PRIMARY KEY (`id_kategori`);
 
 --
+-- Indeks untuk tabel `tb_kembali`
+--
+ALTER TABLE `tb_kembali`
+  ADD PRIMARY KEY (`id_kembali`),
+  ADD KEY `id_auth` (`id_auth`),
+  ADD KEY `id_buku` (`id_buku`),
+  ADD KEY `id_jurusan` (`id_jurusan`);
+
+--
 -- Indeks untuk tabel `tb_level`
 --
 ALTER TABLE `tb_level`
@@ -201,9 +252,8 @@ ALTER TABLE `tb_level`
 --
 ALTER TABLE `tb_pinjam`
   ADD PRIMARY KEY (`id_pinjam`),
-  ADD KEY `id_auth` (`id_auth`),
-  ADD KEY `id_auth_2` (`id_auth`),
-  ADD KEY `id_buku` (`id_buku`);
+  ADD UNIQUE KEY `uk_tb_pinjam` (`id_auth`,`id_buku`),
+  ADD KEY `tb_pinjam_ibfk_2` (`id_buku`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
@@ -213,25 +263,31 @@ ALTER TABLE `tb_pinjam`
 -- AUTO_INCREMENT untuk tabel `auth`
 --
 ALTER TABLE `auth`
-  MODIFY `id_auth` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_auth` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_buku`
 --
 ALTER TABLE `tb_buku`
-  MODIFY `id_buku` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id_buku` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_jurusan`
 --
 ALTER TABLE `tb_jurusan`
-  MODIFY `id_jurusan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_jurusan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kategori`
 --
 ALTER TABLE `tb_kategori`
-  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_kembali`
+--
+ALTER TABLE `tb_kembali`
+  MODIFY `id_kembali` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_level`
@@ -243,7 +299,7 @@ ALTER TABLE `tb_level`
 -- AUTO_INCREMENT untuk tabel `tb_pinjam`
 --
 ALTER TABLE `tb_pinjam`
-  MODIFY `id_pinjam` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `id_pinjam` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
