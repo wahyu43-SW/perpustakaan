@@ -20,9 +20,8 @@
                             <th>Gambar</th>
                             <th>Nama Buku</th>
                             <th>Pengarang</th>
-                            <th>Kategori</th>
-                            <th>Deskripsi</th>
-                            <th>Status</th>
+                            <th>Stok Buku</th>
+                            <th>Kondisi</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -32,14 +31,14 @@
                             <tr>
                                 <td><?= $i++ ?></td>
                                 <td width="20%"><img src="<?= BASEURL ?>/img/daftar-buku/<?= $buku['gambar'] ?>" alt="" width="50%"></td>
-                                <td><?= $buku['nama_buku'] ?></td>
+                                <td width="15%"><?= $buku['nama_buku'] ?></td>
                                 <td><?= $buku['pengarang'] ?></td>
-                                <td><?= $buku['kategori']?> [<?= $buku['kode'] ?>]</td>
-                                <td width="20%"><?= $buku['deskripsi'] ?></td>
-                                <td><?= $buku['status'] === '1' ? "<b style='color:#1cc88a'>Ada</b>" : "<b style='color:#e74a3b'>Dipinjam</b>";?> </td>
+                                <td ><?= $buku['jumlah_buku'] ?></td>
+                                <td><?= $buku['kondisi_buku'] === '1' ? "<b style='color:#1cc88a'>Baik</b>" : "<b style='color:#e74a3b'>Rusak</b>";?> </td>
                                 <td width="30%">
                                     <a href="<?= BASEURL?>/buku/edit_buku/<?= $buku['id_buku'] ?>" class="btn btn-primary btn-ubah "><i class="fas fa-edit"></i> &nbsp;Edit</a> 
                                     <a href="<?= BASEURL?>/Proses/hapus_buku/<?= $buku['id_buku'] ?>" class="btn btn-danger tombol-hapus"><i class="fas fa-trash-alt"></i> &nbsp;Hapus </a>
+                                    <a href="<?= BASEURL?>/buku/detail_buku/<?= $buku['id_buku'] ?>" class="btn btn-success btn-ubah "><i class="fas fa-list"></i>&nbsp;Detail</a>
                                 </td>
                             </tr>
                         <?php endforeach ?>
@@ -82,7 +81,20 @@
                             <?php endforeach ?> 
                         </select>
                     </div>
+                   
                     <div class="form-group">
+                       <label for="kondisi">Kondisi Buku</label>
+                       <select name="kondisi_buku" id="kondisi"  class="form-control">
+                           <option value="">Pilih Kondisi Buku</option>
+                           <option value="1">Baik</option>
+                           <option value="0">Rusak</option>
+                       </select>
+                    </div>
+                    <div class="form-group">
+                       <label for="jumlah">Jumlah Buku</label>
+                       <input type="number" class="form-control" id="jumlah" name="jumlah_buku">
+                    </div>
+                     <div class="form-group">
                        <label for="deskripsi">Deskripsi Buku</label>
                        <textarea class="form-control" id="deskripsi" name="deskripsi" cols="30" rows="5"></textarea>
                     </div>
@@ -99,3 +111,17 @@
         </div>
     </div>
 </div>
+
+
+<!-- <td><?= $buku['kategori']?> [<?= $buku['kode'] ?>]</td>
+                                <td width="20%"><?= $buku['deskripsi'] ?></td>
+                                <td><?= $buku['jumlah_buku'] ?></td>
+                                <td>
+                                    <?php if ($buku['kondisi_buku'] = '1'): ?>
+                                        <?= 'Baik' ?>
+                                    <?php else: ?>
+                                        <?= 'Rusak' ?>
+                                    <?php endif ?>
+                                    
+                                </td>
+                                 -->

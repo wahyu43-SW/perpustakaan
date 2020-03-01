@@ -72,7 +72,7 @@
          const  flashData = $('.flash-data').data('flashdata');
         if (flashData) {
           Swal.fire({
-            title: 'Data Manajement',
+            title: 'Perpustakaan Skensa',
             text: flashData.pesan + flashData.aksi,
             icon: flashData.tipe,
             type: flashData.tipe
@@ -117,29 +117,29 @@
 
         });
 
-        $(document).ready(function(){
-         $('.hover').popover({
-            title:fetchData,
-            html:true,
-            placement:'right',
-            trigger:'hover'
-         });
-         function fetchData(){
-            var ambil_data = '';
-            var element = $(this);
-            var id = element.attr("id");
-            $.ajax({
-               url:"ambil_data.php",
-               method:"POST",
-               async:false,
-               data:{id:id},
-               success:function(data){
-                  ambil_data = data;
-               }
-            });
-            return ambil_data;
-         }
-      });
+      //   $(document).ready(function(){
+      //    $('.hover').popover({
+      //       title:fetchData,
+      //       html:true,
+      //       placement:'right',
+      //       trigger:'hover'
+      //    });
+      //    function fetchData(){
+      //       var ambil_data = '';
+      //       var element = $(this);
+      //       var id = element.attr("id");
+      //       $.ajax({
+      //          url:"ambil_data.php",
+      //          method:"POST",
+      //          async:false,
+      //          data:{id:id},
+      //          success:function(data){
+      //             ambil_data = data;
+      //          }
+      //       });
+      //       return ambil_data;
+      //    }
+      // });
 
     </script>
 

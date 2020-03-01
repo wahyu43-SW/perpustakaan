@@ -198,12 +198,12 @@ class Proses extends Controller
     {
         $add = $this->model('Proses_models')->ubah_pinjam($_POST);
         if ($add['status']){
-            Flasher::setFlash('berhasil', 'di ubah','success');
+            Flasher::setFlash('Buku ', 'Berhasil Di Ubah','success');
             header('Location: '. BASEURL . '/peminjaman/edit');
             exit();
         }else {
-            Flasher::setFlash('Gagal','di ubah','danger');
-            header('Location: '. BASEURL . '/peminjaman/edit');
+            Flasher::setFlash('Buku ','Gagal Di Ubah','error');
+            header('Location: '. BASEURL . '/peminjaman/edit_pinjam/'.$_POST['id']);
             exit();
         }
     }
@@ -212,12 +212,12 @@ class Proses extends Controller
     {
         $add = $this->model('Proses_models')->selesai($id);
         if ($add['status']){
-            Flasher::setFlash('berhasil', 'di ubah','success');
+            Flasher::setFlash('Buku ', 'Berhasil Di Kembalikan','success');
             header('Location: '. BASEURL . '/kembali/index');
             exit();
         }else {
-            Flasher::setFlash('Gagal','di ubah','danger');
-            header('Location: '. BASEURL . '/kembali/index');
+            Flasher::setFlash('Buku ','Gagal Di Kembalikan','error');
+            header('Location: '. BASEURL . '/peminjaman/index');
             exit();
         }
     }
@@ -226,11 +226,11 @@ class Proses extends Controller
     {
         $add = $this->model('Proses_models')->selesai_kembali($id);
         if ($add['status']){
-            Flasher::setFlash('berhasil', 'di Hapus','success');
+            Flasher::setFlash('Peminjam ', 'Berhasil Di Hapus','success');
             header('Location: '. BASEURL . '/kembali/index');
             exit();
         }else {
-            Flasher::setFlash('Gagal','di Hapus','danger');
+            Flasher::setFlash('Peminjam ','Gagal Di Hapus','error');
             header('Location: '. BASEURL . '/kembali/index');
             exit();
         }

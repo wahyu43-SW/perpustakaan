@@ -36,6 +36,23 @@
                             </select>
                         </div>
                         <div class="form-group">
+                           <label for="kondisi">Kondisi Buku</label>
+                           <select name="kondisi_buku" id="kondisi"  class="form-control">
+                               <?php if ($data['buku']['kondisi_buku']  == "1") :?>
+                                   <option value="1">Baik</option>
+                                   <option value="0">Rusak</option>
+                                   <?php elseif ($data['buku']['kondisi_buku']  == "0"): ?>
+                                      <option value="0">Rusak</option> 
+                                      <option value="1">Baik</option>
+                                <?php endif ?>
+                               
+                           </select>
+                        </div>
+                        <div class="form-group">
+                           <label for="jumlah">Jumlah Buku</label>
+                           <input type="number" class="form-control" id="jumlah" name="jumlah_buku" value="<?= $data['buku']['jumlah_buku']  ?>">
+                        </div>
+                        <div class="form-group">
                            <label for="deskripsi">Deskripsi Buku</label>
                            <textarea class="form-control" id="deskripsi" name="deskripsi" cols="30" rows="5"><?= $data['buku']['deskripsi'] ?></textarea>
                         </div>

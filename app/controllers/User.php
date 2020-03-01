@@ -44,6 +44,7 @@ class User extends Controller
 		$this->view('perpustakaan/user/edit_jurusan',$data);
 		$this->view('template/footer');
 	}
+	
 
 
 

@@ -46,13 +46,15 @@ class Proses_models extends Controller
                         if( move_uploaded_file($file['tmp_name'], $destination.$fileNewName) ){
                         // masukkan data ke database 
                         
-                          $query = "INSERT INTO tb_buku VALUES ('', :nama_buku, :pengarang, :id_kategori, :deskripsi, :gambar, '1')";
+                          $query = "INSERT INTO tb_buku VALUES ('', :nama_buku, :pengarang, :id_kategori, :deskripsi, :gambar, :jumlah_buku, :kondisi_buku)";
                           try{
                             $this->db->query($query);
                             $this->db->bind('nama_buku', $data['nama'] );
                             $this->db->bind('pengarang', $data['pengarang'] );
                             $this->db->bind('id_kategori', $data['kategori'] );
                             $this->db->bind('deskripsi', $data['deskripsi'] );
+                            $this->db->bind('jumlah_buku', $data['jumlah_buku'] );
+                            $this->db->bind('kondisi_buku', $data['kondisi_buku'] );
                             $this->db->bind('gambar', $fileNewName);
 
                             $this->db->execute();
@@ -154,25 +156,19 @@ class Proses_models extends Controller
     public function addPinjam($data)
     {
         $id = $data['buku'];
-        $query = "UPDATE tb_buku SET status = '0' WHERE id_buku = $id";
-        $this->db->query($query);
-        $this->db->execute();
-
 
         date_default_timezone_set('Asia/Kuala_Lumpur');
         $date = date('Y-m-d');
         $waktu = $data['pinjam'];
         $sampai = mktime(0,0,0,date("n"),date("j")+$waktu, date("Y"));
         $kembali = date("Y-m-d", $sampai);
-        $query = "INSERT INTO tb_pinjam VALUES ('', :id_auth, :id_buku, :id_jurusan, '$date', '$kembali', :lama_pinjam, '','0')";
+        $query = "INSERT INTO tb_pinjam VALUES ('', :id_auth, :id_buku, :id_jurusan, '$date', '$kembali', :lama_pinjam, '')";
         try{
             $this->db->query($query);
             $this->db->bind('id_auth', $data['nama']);
             $this->db->bind('id_buku', $data['buku']);
             $this->db->bind('id_jurusan', $data['jurusan']);
             $this->db->bind('lama_pinjam', $data['pinjam']);
-
-
             $this->db->execute();
             // return $this->db->rowCount();
           return ['status' => true];
@@ -257,7 +253,7 @@ class Proses_models extends Controller
     public function selesai_kembali($id)
     {
 
-        $query = "DELETE FROM tb_pinjam WHERE id_pinjam = $id";
+        $query = "DELETE FROM tb_kembali WHERE id_kembali = $id";
         try{
         $this->db->query($query);
         $this->db->execute();
@@ -272,7 +268,9 @@ class Proses_models extends Controller
 
     public function editbuku($data)
 	{
-        // var_dump($data);die;
+        $isigambar = $_FILES['gambar'];
+        if ($isigambar['error'] == 0) {
+             // var_dump($data);die;
         $query = "SELECT * FROM tb_buku WHERE id_buku = :id";
         $this->db->query($query);
         $this->db->bind('id', $data['id']);
@@ -313,13 +311,15 @@ class Proses_models extends Controller
                             // pindahin ke folder baru
                             if( move_uploaded_file($file['tmp_name'], $destination.$fileNewName) ){
                             // masukkan data ke database 
-                              $query = "UPDATE tb_buku SET nama_buku =:nama_buku, pengarang =:pengarang, id_kategori =:id_kategori, deskripsi =:deskripsi, gambar =:gambar WHERE id_buku =:id_buku";
+                              $query = "UPDATE tb_buku SET nama_buku =:nama_buku, pengarang =:pengarang, id_kategori =:id_kategori, deskripsi =:deskripsi, gambar =:gambar , jumlah_buku = :jumlah_buku, kondisi_buku = :kondisi_buku WHERE id_buku =:id_buku";
                               try{
                                 $this->db->query($query);
                                 $this->db->bind('nama_buku', $data["nama"]);
                                 $this->db->bind('pengarang', $data["pengarang"]);
                                 $this->db->bind('id_kategori', $data["kategori"]);
                                 $this->db->bind('deskripsi', $data["deskripsi"]);
+                                $this->db->bind('jumlah_buku', $data["jumlah_buku"]);
+                                $this->db->bind('kondisi_buku', $data["kondisi_buku"]);
                                 $this->db->bind('gambar', $fileNewName);
                                 $this->db->bind('id_buku', $data["id"] );
                                 $this->db->execute();
@@ -342,9 +342,27 @@ class Proses_models extends Controller
                 }
                 
             }
+        }else{
+            $query = "UPDATE tb_buku SET nama_buku =:nama_buku, pengarang =:pengarang, id_kategori =:id_kategori, deskripsi =:deskripsi, jumlah_buku = :jumlah_buku, kondisi_buku = :kondisi_buku WHERE id_buku =:id_buku";
+            
+            try{
+                $this->db->query($query);
+                $this->db->bind('nama_buku', $data["nama"]);
+                $this->db->bind('pengarang', $data["pengarang"]);
+                $this->db->bind('id_kategori', $data["kategori"]);
+                $this->db->bind('deskripsi', $data["deskripsi"]);
+                $this->db->bind('jumlah_buku', $data["jumlah_buku"]);
+                $this->db->bind('kondisi_buku', $data["kondisi_buku"]);
+                $this->db->bind('id_buku', $data["id"] );
+                $this->db->execute();
+            // return $this->db->rowCount();
+            return ['status' => true];
+            } catch (PDOException $e) {
+              return ['status' => false, 'msg' => $e->getMessage()];
+            }
         
-
-		
+        }
+        
 	}
 
     public function edit_user($data)
@@ -406,6 +424,15 @@ class Proses_models extends Controller
         $this->db->execute();
         $data = $this->db->single();
 
+        $buku = $data['id_buku'];
+
+        $query = "SELECT * FROM tb_buku WHERE id_buku = $buku";
+        $this->db->query($query);
+        $this->db->execute();
+        $bukuall =  $this->db->single();
+
+        $plus = $bukuall['jumlah_buku'] + 1;
+
         $date = date('Y-m-d');
         $lama_pinjam = $data['lama_pinjam'];
         $tanggal_pinjam = strtotime($data['tanggal_pinjam']);
@@ -423,16 +450,26 @@ class Proses_models extends Controller
         }else{
             $denda = 0;
         }
+
+
+        $id_auth = $data['id_auth'];
+        $id_buku = $data['id_buku'];
+        $id_jurusan = $data['id_jurusan'];
+        $id_pinjam = $data['tanggal_pinjam'];
+        $id_kembali = $data['tanggal_kembali'];
         // var_dump($denda);die;
-        $query = "UPDATE tb_pinjam SET denda = '$denda',keadaan = '1' WHERE id_pinjam = $id";
+        $query = "INSERT INTO tb_kembali VALUES ('','$id_auth','$id_buku','$id_jurusan','$id_pinjam','$id_kembali','$denda')";
         try{
         $this->db->query($query);
         $this->db->execute();
 
+        $queryD = "DELETE FROM tb_pinjam WHERE id_pinjam = $id";
+        $this->db->query($queryD);
+        $this->db->execute();
         
         $buku = $data['id_buku'];
 
-        $query = "UPDATE tb_buku SET status = '1' WHERE id_buku = $buku";
+        $query = "UPDATE tb_buku SET jumlah_buku = $plus WHERE id_buku = $buku";
         $this->db->query($query);
         $this->db->execute();
         // return $this->db->rowCount();
@@ -447,6 +484,12 @@ class Proses_models extends Controller
 
     public function ubah_pinjam($data)
     {   
+        $buku = $data['buku'];
+        $queryB = "SELECT * FROM tb_buku WHERE id_buku = $buku";
+        $this->db->query($queryB);
+        $this->db->execute();
+        $bukuall =  $this->db->single();
+
         date_default_timezone_set('Asia/Kuala_Lumpur');
         $date = date('Y-m-d');
         $waktu = $data['pinjam'];
@@ -459,6 +502,11 @@ class Proses_models extends Controller
         $this->db->bind('buku', $data['buku']);
         $this->db->bind('jurusan', $data['jurusan']);
         $this->db->bind('id', $data['id']);
+        $this->db->execute();
+        // return $this->db->rowCount();
+        $minus = $bukuall['jumlah_buku'] - 1;
+        $queryU = "UPDATE tb_buku SET jumlah_buku = $minus WHERE id_buku = $buku";
+        $this->db->query($queryU);
         $this->db->execute();
         // return $this->db->rowCount();
           return ['status' => true];

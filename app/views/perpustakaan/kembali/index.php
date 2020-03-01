@@ -27,7 +27,7 @@
                             <td><?= $pinjam['tanggal_kembali'] ?></td>
                             <td>Rp <?= $pinjam['denda'] ?></td>
                             <td>
-                                <a href="<?= BASEURL?>/Proses/selesai_kembali/<?= $pinjam['id_pinjam'] ?>" class="btn btn-danger "><i class="fas fa-trash-alt"></i> &nbsp;Hapus</a>
+                                <a href="<?= BASEURL?>/Proses/selesai_kembali/<?= $pinjam['id_kembali'] ?>" class="btn btn-danger "><i class="fas fa-trash-alt"></i> &nbsp;Hapus</a>
                             </td>
                           </tr>
                         <?php endforeach ?>

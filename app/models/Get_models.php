@@ -32,6 +32,17 @@ class Get_models
         }
     }
 
+    public function ambilDetailbukuby($verificator, $value, $tb)
+    {
+        if (isset($verificator) && isset($value)) {
+            $q = "SELECT * FROM $tb
+                  INNER JOIN tb_kategori ON $tb.id_kategori  = tb_kategori.id_kategori  WHERE $verificator = :$verificator ";
+            $this->db->query($q);
+            $this->db->bind($verificator, $value);
+            return $this->db->single();
+        }
+    }
+
     /*-------------------------------------> ambil buku <---------------------------------------*/
 
 	public function ambilBuku()
@@ -81,16 +92,16 @@ class Get_models
 	{
 		$query = "SELECT * FROM tb_pinjam
 				  INNER JOIN tb_buku ON tb_pinjam.id_buku  = tb_buku.id_buku
-				  INNER JOIN auth ON tb_pinjam.id_auth = auth.id_auth WHERE keadaan = 0";
+				  INNER JOIN auth ON tb_pinjam.id_auth = auth.id_auth";
 		$this->db->query($query);
 		return $this->db->resultSet();
 	}
 
 	public function ambilPinjamkembali()
 	{
-		$query = "SELECT * FROM tb_pinjam
-				  INNER JOIN tb_buku ON tb_pinjam.id_buku  = tb_buku.id_buku
-				  INNER JOIN auth ON tb_pinjam.id_auth = auth.id_auth WHERE keadaan = 1";
+		$query = "SELECT * FROM tb_kembali
+				  INNER JOIN tb_buku ON tb_kembali.id_buku  = tb_buku.id_buku
+				  INNER JOIN auth ON tb_kembali.id_auth = auth.id_auth";
 		$this->db->query($query);
 		return $this->db->resultSet();
 	}
@@ -104,7 +115,7 @@ class Get_models
 
     public function ambilBukuPinjam()
     {
-    	$query = "SELECT * FROM tb_buku WHERE status = 1";
+    	$query = "SELECT * FROM tb_buku WHERE jumlah_buku != 0";
     	$this->db->query($query);
     	return $this->db->resultSet();
     }
@@ -123,7 +134,7 @@ class Get_models
 
     public function ambilBukuall()
     {
-    	$query = "SELECT * FROM tb_buku";
+    	$query = "SELECT * FROM tb_buku WHERE jumlah_buku > '0'";
     	$this->db->query($query);
     	return $this->db->resultSet();
     }
@@ -145,14 +156,14 @@ class Get_models
 
     public function countpeminjaman()
     {
-    	$query = "SELECT COUNT(*) FROM tb_pinjam WHERE keadaan = '0'";
+    	$query = "SELECT COUNT(*) FROM tb_pinjam";
     	$this->db->query($query);
     	return $this->db->resultarray();
     }
 
     public function countpengembalian()
     {
-    	$query = "SELECT COUNT(*) FROM tb_pinjam WHERE keadaan = '1'";
+    	$query = "SELECT COUNT(*) FROM tb_kembali";
     	$this->db->query($query);
     	return $this->db->resultarray();
     }

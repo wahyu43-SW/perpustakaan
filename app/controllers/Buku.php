@@ -43,5 +43,15 @@ class Buku extends Controller
 		$this->view('template/footer');
 	}
 
+	public function detail_buku($id)
+	{
+		$data['judul'] = "Detail Buku";
+		$data['buku'] = $this->model('Get_models')->ambilDetailbukuby("id_buku",$id, "tb_buku");
+		// $data['kategori'] = $this->model('Get_models')->ambilKategori($id);
+		$this->view('template/header',$data);
+		$this->view('perpustakaan/buku/detail_buku',$data);
+		$this->view('template/footer');
+	}
+
 	
 }

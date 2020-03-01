@@ -24,12 +24,7 @@
                             <option value="">Pilih Buku</option>
                             <?php foreach ($data['buku'] as $buku): ?>
                                 <option <?= $buku['id_buku'] === $data['allPm']['id_buku']  ? "selected" : "";?> value="<?= $buku['id_buku'] ?>">
-                                    <?php if ($buku['status'] == '0'): ?>
-                                         <?= $buku['nama_buku'] ?> <?= "--> Buku Di Pinjam" ?>
-                                    <?php endif ?>
-                                    <?php if ($buku['status'] == '1'): ?>
-                                         <?= $buku['nama_buku'] ?> <?= "--> Buku Ada" ?>
-                                    <?php endif ?>
+                                    <?= $buku['nama_buku'] ?>
                                 </option>
                             <?php endforeach ?>
                         </select>
