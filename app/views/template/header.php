@@ -34,7 +34,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= BASEURL ?>">
         <div class="sidebar-brand-icon">
          <i class="fas fa-book-reader"></i>
         </div>
@@ -106,7 +106,7 @@
 
       <!-- Nav Item - Tables -->
       <li class="nav-item">
-        <a class="nav-link" href="<?= BASEURL?>/laporan/index">
+        <a class="nav-link" href="<?= BASEURL?>/laporan/">
           <i class="fas fa-download"></i>
           <span>Generate Report</span></a>
       </li>
