@@ -34,7 +34,7 @@
                                 <td width="15%"><?= $buku['nama_buku'] ?></td>
                                 <td><?= $buku['pengarang'] ?></td>
                                 <td ><?= $buku['jumlah_buku'] ?></td>
-                                <td><?= $buku['kondisi_buku'] === '1' ? "<b style='color:#1cc88a'>Baik</b>" : "<b style='color:#e74a3b'>Rusak</b>";?> </td>
+                                <td><?= $buku['kondisi_buku'] === 'Baik' ? "<b style='color:#1cc88a'>Baik</b>" : "<b style='color:#e74a3b'>Rusak</b>";?> </td>
                                 <td width="30%">
                                     <a href="<?= BASEURL?>/buku/edit_buku/<?= $buku['id_buku'] ?>" class="btn btn-primary btn-ubah "><i class="fas fa-edit"></i> &nbsp;Edit</a> 
                                     <a href="<?= BASEURL?>/Proses/hapus_buku/<?= $buku['id_buku'] ?>" class="btn btn-danger tombol-hapus"><i class="fas fa-trash-alt"></i> &nbsp;Hapus </a>
@@ -86,8 +86,8 @@
                        <label for="kondisi">Kondisi Buku</label>
                        <select name="kondisi_buku" id="kondisi"  class="form-control">
                            <option value="">Pilih Kondisi Buku</option>
-                           <option value="1">Baik</option>
-                           <option value="0">Rusak</option>
+                           <option value="Baik">Baik</option>
+                           <option value="Rusak">Rusak</option>
                        </select>
                     </div>
                     <div class="form-group">

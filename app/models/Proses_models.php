@@ -41,12 +41,13 @@ class Proses_models extends Controller
                  if( $file_weight <= $file_max_weight ){
                      $fileNewName =  $file_name_no_ext[0].microtime().'.'.$file_extension ;
 
-
+                         date_default_timezone_set('Asia/Kuala_Lumpur');
+                         $date = date('Y-m-d');
                         // pindahin ke folder baru
                         if( move_uploaded_file($file['tmp_name'], $destination.$fileNewName) ){
                         // masukkan data ke database 
                         
-                          $query = "INSERT INTO tb_buku VALUES ('', :nama_buku, :pengarang, :id_kategori, :deskripsi, :gambar, :jumlah_buku, :kondisi_buku)";
+                          $query = "INSERT INTO tb_buku VALUES ('', :nama_buku, :pengarang, :id_kategori, :deskripsi, :gambar, :jumlah_buku, :tanggal_masuk ,:kondisi_buku)";
                           try{
                             $this->db->query($query);
                             $this->db->bind('nama_buku', $data['nama'] );
@@ -54,6 +55,7 @@ class Proses_models extends Controller
                             $this->db->bind('id_kategori', $data['kategori'] );
                             $this->db->bind('deskripsi', $data['deskripsi'] );
                             $this->db->bind('jumlah_buku', $data['jumlah_buku'] );
+                            $this->db->bind('tanggal_masuk', $date);
                             $this->db->bind('kondisi_buku', $data['kondisi_buku'] );
                             $this->db->bind('gambar', $fileNewName);
 
@@ -97,7 +99,8 @@ class Proses_models extends Controller
 
     public function addUser($data)
     {
-
+        date_default_timezone_set('Asia/Kuala_Lumpur');
+        $date = date('Y-m-d');
         $username = strtolower(stripcslashes($data['username']));
         $nama = stripcslashes($data['nama']);
         $password = $data['password'];
@@ -119,7 +122,7 @@ class Proses_models extends Controller
             exit();
         }
 
-        $query =  "INSERT INTO auth VALUES ('',:nama , :nis, :kelas, :username, :password, :id_level, :id_jurusan)";
+        $query =  "INSERT INTO auth VALUES ('',:nama , :nis, :kelas, :username, :password, :id_level, :id_jurusan, '$date')";
         try{
         $this->db->query($query);
         $this->db->bind('nama',  $nama);
@@ -441,7 +444,7 @@ class Proses_models extends Controller
         // var_dump($tanggal_kembali);var_dump($harus_kembali);die;
         $selisih = $harus_kembali -  $tanggal_kembali ;
         // var_dump($selisih);die;
-        $hitung_hari = floor($selisih/(60*60*24) + 1); //20
+        $hitung_hari = floor($selisih/(60*60*24)); //20
         // var_dump($hitung_hari);die;
         $selisih2 = (abs($tanggal_pinjam - $tanggal_kembali));
         $sampai = floor($selisih2/(60*60*24)); //12
@@ -451,7 +454,7 @@ class Proses_models extends Controller
             $denda = 0;
         }
 
-
+        // var_dump($denda);die;
         $id_auth = $data['id_auth'];
         $id_buku = $data['id_buku'];
         $id_jurusan = $data['id_jurusan'];
