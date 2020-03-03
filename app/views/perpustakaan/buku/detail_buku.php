@@ -19,6 +19,7 @@
 			      		<li>Kategori</li>
 			      		<li>Deskripsi</li>
 			      		<li>Jumlah Buku</li>
+			      		<li>Tanggal Masuk</li>
 			      		<li>Kondisi Buku</li>
 			      	</ul>
 			      	<ul class="list-unstyled"  style="font-size:1.2rem;">
@@ -27,8 +28,9 @@
 			      		<li> &nbsp; &nbsp;: &nbsp;<?= $data['buku']['kategori'] ?> </li>
 			      		<li> &nbsp; &nbsp;: &nbsp; <?= $data['buku']['deskripsi'] ?></li>
 			      		<li> &nbsp; &nbsp;: &nbsp; <?= $data['buku']['jumlah_buku'] ?></li>
+			      		<li> &nbsp; &nbsp;: &nbsp; <?= date('d F Y', strtotime($data['buku']['tanggal_masuk'])) ?></li>
 			      		<li> &nbsp; &nbsp;: &nbsp; 
-							<?= $data['buku']['kondisi_buku'] === '1' ? "<b style='color:#1cc88a'>Baik</b>" : "<b style='color:#e74a3b'>Rusak</b>";?>
+							<?= $data['buku']['kondisi_buku'] === 'Baik' ? "<b style='color:#1cc88a'>Baik</b>" : "<b style='color:#e74a3b'>Rusak</b>";?>
 			      			</li>
 			      	</ul>
 			      	</div>

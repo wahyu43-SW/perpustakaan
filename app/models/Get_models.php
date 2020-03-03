@@ -101,7 +101,8 @@ class Get_models
 	{
 		$query = "SELECT * FROM tb_kembali
 				  INNER JOIN tb_buku ON tb_kembali.id_buku  = tb_buku.id_buku
-				  INNER JOIN auth ON tb_kembali.id_auth = auth.id_auth";
+				  INNER JOIN auth ON tb_kembali.id_auth = auth.id_auth
+                  INNER JOIN tb_jurusan ON tb_kembali.id_jurusan = tb_jurusan.id_jurusan";
 		$this->db->query($query);
 		return $this->db->resultSet();
 	}
@@ -167,4 +168,5 @@ class Get_models
     	$this->db->query($query);
     	return $this->db->resultarray();
     }
+
 }

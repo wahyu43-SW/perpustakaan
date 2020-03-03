@@ -38,12 +38,12 @@
                         <div class="form-group">
                            <label for="kondisi">Kondisi Buku</label>
                            <select name="kondisi_buku" id="kondisi"  class="form-control">
-                               <?php if ($data['buku']['kondisi_buku']  == "1") :?>
-                                   <option value="1">Baik</option>
-                                   <option value="0">Rusak</option>
-                                   <?php elseif ($data['buku']['kondisi_buku']  == "0"): ?>
-                                      <option value="0">Rusak</option> 
-                                      <option value="1">Baik</option>
+                               <?php if ($data['buku']['kondisi_buku']  == "Baik") :?>
+                                   <option value="Baik">Baik</option>
+                                   <option value="Rusak">Rusak</option>
+                                   <?php elseif ($data['buku']['kondisi_buku']  == "Rusak"): ?>
+                                      <option value="Rusak">Rusak</option> 
+                                      <option value="Baik">Baik</option>
                                 <?php endif ?>
                                
                            </select>

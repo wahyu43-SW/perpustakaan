@@ -13,9 +13,9 @@
 
             <!-- Earnings (Monthly) Card Example -->
 
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-4 col-md-6 mb-4">
               <div class="card border-left-primary shadow h-100 py-2 scale">
-              	<a href="" class="text-decoration-none">
+              	<a href="<?= BASEURL ?>/laporan/buku" class="text-decoration-none">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
@@ -32,8 +32,9 @@
             </div>
 
             <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
+            <div class="col-xl-4 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2 scale">
+              	<a href="<?= BASEURL ?>/laporan/user" class="text-decoration-none">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
@@ -45,12 +46,14 @@
                     </div>
                   </div>
                 </div>
+            </a>
               </div>
             </div>
 
             <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-info shadow h-100 py-2">
+            <div class="col-xl-4 col-md-6 mb-4">
+              <div class="card border-left-info shadow h-100 py-2 scale">
+              	<a href="<?= BASEURL ?>/laporan/peminjaman" class="text-decoration-none">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
@@ -67,24 +70,10 @@
                     </div>
                   </div>
                 </div>
+            </a>
               </div>
             </div>
 
-            <!-- Pending Requests Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-md font-weight-bold text-warning mb-1">Laporan Pengembalian </div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-download fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          
           </div>
         </div>

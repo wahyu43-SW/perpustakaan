@@ -24,6 +24,7 @@
                             <th>Kelas</th>
                             <th>Username</th>
                             <th>Level</th>
+                            <th>Tanggal Daftar</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -34,10 +35,11 @@
                                 <td><?= $i++ ?></td>
                                 <td><?= $user['nama'] ?></td>
                                 <td><?= $user['nis'] ?></td>
-                                <td><?= $user['kelas'] ?> &nbsp; (<?= $user['jurusan'] ?>)</td>
+                                <td width="15%"><?= $user['kelas'] ?> &nbsp; (<?= $user['jurusan'] ?>)</td>
                                 <td><?= $user['username'] ?></td>
                                 <td><?= $user['level'] ?></td>
-                                <td> <a href="<?= BASEURL?>/user/edit_user/<?= $user['id_auth'] ?>" class="btn btn-primary btn-ubah "><i class="fas fa-edit"></i> &nbsp;Edit</a> 
+                                <td width="15%"><?= date('d F Y', strtotime($user['tanggal_masuk'])) ?></td>
+                                <td width="20%"> <a href="<?= BASEURL?>/user/edit_user/<?= $user['id_auth'] ?>" class="btn btn-primary btn-ubah "><i class="fas fa-edit"></i> &nbsp;Edit</a> 
                                     <a href="<?= BASEURL?>/Proses/hapus_user/<?= $user['id_auth'] ?>" class="btn btn-danger tombol-hapus"><i class="fas fa-trash-alt"></i> &nbsp;Hapus </a></td>
                             </tr>
                         <?php endforeach ?>
