@@ -11,7 +11,7 @@ PROJEK MVC PERPUSTAKAAN BY KELOMPOK 3
 5.Tegar<br>
 6.Tini Wahyuni <br>
 7.Nulia <br>
-8.Jeni Andini <br>
+8.Ni Luh Putu Jeni Andini <br>
 9.Nyoman Trinity Laksmi Maharani <br>
 
 
