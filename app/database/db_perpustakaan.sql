@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 01 Mar 2020 pada 01.38
+-- Waktu pembuatan: 09 Mar 2020 pada 13.54
 -- Versi server: 10.4.6-MariaDB
 -- Versi PHP: 7.3.9
 
@@ -36,17 +36,19 @@ CREATE TABLE `auth` (
   `username` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `id_level` int(11) NOT NULL,
-  `id_jurusan` int(11) NOT NULL
+  `id_jurusan` int(11) NOT NULL,
+  `tanggal_masuk` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `auth`
 --
 
-INSERT INTO `auth` (`id_auth`, `nama`, `nis`, `kelas`, `username`, `password`, `id_level`, `id_jurusan`) VALUES
-(14, 'Admin', 0, '0', 'admin', '$2y$10$AOlxv4Mdngz2ojF052lfkOPSc7tUDHKj5I0dOmlSrBEqr8Wou2DDi', 1, 7),
-(16, 'wahyu purnama', 27257, 'XI', 'wahyu', '$2y$10$7wJ9H6MEszGi439K8V/Mq.FsSaDzQz9dKjqU7g2L72w7ZJUUcQtZa', 3, 1),
-(17, 'qwdas', 27257, 'XI', 'ghnj', '$2y$10$XuPzq7GjSCrMd2gvxi2bx.PLkAMuRJAIJSwWGOOt56fYjiHQGhifa', 3, 6);
+INSERT INTO `auth` (`id_auth`, `nama`, `nis`, `kelas`, `username`, `password`, `id_level`, `id_jurusan`, `tanggal_masuk`) VALUES
+(14, 'Admin', 0, '0', 'admin', '$2y$10$AOlxv4Mdngz2ojF052lfkOPSc7tUDHKj5I0dOmlSrBEqr8Wou2DDi', 1, 7, '2020-03-03'),
+(16, 'wahyu purnama', 27257, 'XI', 'wahyu', '$2y$10$7wJ9H6MEszGi439K8V/Mq.FsSaDzQz9dKjqU7g2L72w7ZJUUcQtZa', 3, 1, '2020-03-03'),
+(17, 'qwdas', 27257, 'XI', 'ghnj', '$2y$10$XuPzq7GjSCrMd2gvxi2bx.PLkAMuRJAIJSwWGOOt56fYjiHQGhifa', 3, 6, '2020-03-03'),
+(18, 'Prihandana putra', 2341334, 'XI', 'prihandana', '$2y$10$ByNxfu.8vMGIC0Vz.QxuweM91JPjx3A2kjzyeSxaHID.5yBzRDGmm', 3, 1, '2020-03-03');
 
 -- --------------------------------------------------------
 
@@ -62,16 +64,18 @@ CREATE TABLE `tb_buku` (
   `deskripsi` text NOT NULL,
   `gambar` varchar(50) NOT NULL,
   `jumlah_buku` int(11) NOT NULL,
-  `kondisi_buku` tinyint(2) NOT NULL COMMENT '1 = baik,  0 =  rusak'
+  `tanggal_masuk` date NOT NULL DEFAULT current_timestamp(),
+  `kondisi_buku` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `tb_buku`
 --
 
-INSERT INTO `tb_buku` (`id_buku`, `nama_buku`, `pengarang`, `id_kategori`, `deskripsi`, `gambar`, `jumlah_buku`, `kondisi_buku`) VALUES
-(85, 'ad', 'saas', 8, 'fdgd', 'b0.28935400 1582985950.jpg', 0, 1),
-(86, 'ger', 'gtr', 8, 'fgbf', 'm0.38233200 1582985967.jpg', 1, 0);
+INSERT INTO `tb_buku` (`id_buku`, `nama_buku`, `pengarang`, `id_kategori`, `deskripsi`, `gambar`, `jumlah_buku`, `tanggal_masuk`, `kondisi_buku`) VALUES
+(85, 'ad', 'saas', 8, 'fdgd', 'b0.28935400 1582985950.jpg', 1, '2020-03-01', 'Baik'),
+(86, 'ger', 'gtr', 8, 'fgbf', 'm0.38233200 1582985967.jpg', 1, '2020-03-01', 'Baik'),
+(89, 'segalanya', 'semesta', 9, 'dgdgd', 'U0.19957200 1583117038.png', 4, '2020-03-02', 'Baik');
 
 -- --------------------------------------------------------
 
@@ -93,7 +97,8 @@ INSERT INTO `tb_jurusan` (`id_jurusan`, `jurusan`) VALUES
 (2, 'Multimedia'),
 (3, 'Teknik Komputer Jaringan'),
 (6, 'Audio Video'),
-(7, 'Petugas');
+(7, 'Petugas'),
+(8, 'asiap');
 
 -- --------------------------------------------------------
 
@@ -112,7 +117,8 @@ CREATE TABLE `tb_kategori` (
 --
 
 INSERT INTO `tb_kategori` (`id_kategori`, `kategori`, `kode`) VALUES
-(8, 'agama', '200');
+(8, 'agama', '200'),
+(9, 'fyusdyfdf', '11213');
 
 -- --------------------------------------------------------
 
@@ -135,7 +141,12 @@ CREATE TABLE `tb_kembali` (
 --
 
 INSERT INTO `tb_kembali` (`id_kembali`, `id_auth`, `id_buku`, `id_jurusan`, `tanggal_pinjam`, `tanggal_kembali`, `denda`) VALUES
-(17, 14, 85, 1, '2020-02-29', '2020-03-02', 0);
+(17, 14, 85, 1, '2020-02-29', '2020-03-02', 0),
+(18, 14, 86, 1, '2020-02-29', '2020-03-01', 1000),
+(20, 17, 86, 1, '2020-03-01', '2020-03-16', 0),
+(21, 14, 86, 1, '2020-03-01', '2020-03-02', 0),
+(22, 16, 86, 1, '2020-03-01', '2020-03-16', 30000),
+(24, 18, 86, 2, '2020-03-03', '2020-03-07', 2000);
 
 -- --------------------------------------------------------
 
@@ -179,8 +190,7 @@ CREATE TABLE `tb_pinjam` (
 --
 
 INSERT INTO `tb_pinjam` (`id_pinjam`, `id_auth`, `id_buku`, `id_jurusan`, `tanggal_pinjam`, `tanggal_kembali`, `lama_pinjam`, `denda`) VALUES
-(13, 14, 86, 1, '2020-02-29', '2020-03-01', 1, 0),
-(15, 14, 85, 1, '2020-02-29', '2020-03-01', 1, 0);
+(23, 16, 86, 1, '2020-03-09', '2020-03-10', 1, 0);
 
 --
 -- Trigger `tb_pinjam`
@@ -263,31 +273,31 @@ ALTER TABLE `tb_pinjam`
 -- AUTO_INCREMENT untuk tabel `auth`
 --
 ALTER TABLE `auth`
-  MODIFY `id_auth` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_auth` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_buku`
 --
 ALTER TABLE `tb_buku`
-  MODIFY `id_buku` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `id_buku` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_jurusan`
 --
 ALTER TABLE `tb_jurusan`
-  MODIFY `id_jurusan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_jurusan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kategori`
 --
 ALTER TABLE `tb_kategori`
-  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kembali`
 --
 ALTER TABLE `tb_kembali`
-  MODIFY `id_kembali` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_kembali` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_level`
@@ -299,7 +309,7 @@ ALTER TABLE `tb_level`
 -- AUTO_INCREMENT untuk tabel `tb_pinjam`
 --
 ALTER TABLE `tb_pinjam`
-  MODIFY `id_pinjam` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_pinjam` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
