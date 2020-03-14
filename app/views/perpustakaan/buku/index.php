@@ -111,17 +111,3 @@
         </div>
     </div>
 </div>
-
-
-<!-- <td><?= $buku['kategori']?> [<?= $buku['kode'] ?>]</td>
-                                <td width="20%"><?= $buku['deskripsi'] ?></td>
-                                <td><?= $buku['jumlah_buku'] ?></td>
-                                <td>
-                                    <?php if ($buku['kondisi_buku'] = '1'): ?>
-                                        <?= 'Baik' ?>
-                                    <?php else: ?>
-                                        <?= 'Rusak' ?>
-                                    <?php endif ?>
-                                    
-                                </td>
-                                 -->
