@@ -85,5 +85,5 @@
         </div>
         <!-- /.container-fluid -->
         <div class="admin-pembuka">
-          <h1>Hello</h1>
+          <h1>Hello <?= $_SESSION['nama'] ?></h1>
         </div>

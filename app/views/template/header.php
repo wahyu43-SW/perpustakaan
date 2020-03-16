@@ -1,3 +1,12 @@
+<?php 
+  $login =$_SESSION['status'];
+  $role = $_SESSION['role'];
+  if ($login != 'ada' && $role !== '1') {
+    header('Location: '.BASEURL.'/home/page');
+  }elseif ($login != 'ada' && $role !== '2') {
+    header('Location: '.BASEURL.'/home/page');
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
  
@@ -85,7 +94,7 @@
      <li class="nav-item">
         <a class="nav-link" href="<?= BASEURL?>/user/index">
           <i class="fas fa-users"></i>
-          <span> Daftar User</span>
+          <span> Daftar User </span>
         </a>
       </li>
       <!-- Nav Item - Pages Collapse Menu -->
@@ -99,7 +108,7 @@
       <!-- Nav Item - Charts -->
        <li class="nav-item">
         <a class="nav-link" href="<?= BASEURL?>/kembali/index">
-           <i class="fas fa-outdent"></i>
+           <i class="fas fa-check"></i>
           <span>Pengembalian</span>
         </a>
       </li>
@@ -143,7 +152,7 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Wahyu Purnama</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $_SESSION['nama'] ?></span>
                                 <img class="img-profile rounded-circle" src="<?= BASEURL ?>/img/wahyu.jpg">
                             </a>
                             <!-- Dropdown - User Information -->
