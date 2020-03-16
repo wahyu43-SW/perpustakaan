@@ -30,3 +30,4 @@
  function closeleft(){
  	document.getElementById("navbar").style.left="-100rem";
  }
+
