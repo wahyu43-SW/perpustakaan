@@ -454,6 +454,7 @@
 								<ul>
 									<li><a href="" class="tk">FAQ</a></li>
 									<li><a href="" class="tk">Hubungi Kami</a></li>
+									<li><a href="http://perpustakaan.com/projek_perpustakaan/Perpustakaan_mvc/app/views/template/404.php" class="tk">Page 404 </a></li>
 								</ul>
 							</div>
 						</div>

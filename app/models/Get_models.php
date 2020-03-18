@@ -101,8 +101,7 @@ class Get_models
 	{
 		$query = "SELECT * FROM tb_kembali
 				  INNER JOIN tb_buku ON tb_kembali.id_buku  = tb_buku.id_buku
-				  INNER JOIN auth ON tb_kembali.id_auth = auth.id_auth
-                  INNER JOIN tb_jurusan ON tb_kembali.id_jurusan = tb_jurusan.id_jurusan";
+				  INNER JOIN auth ON tb_kembali.id_auth = auth.id_auth";
 		$this->db->query($query);
 		return $this->db->resultSet();
 	}
@@ -125,8 +124,8 @@ class Get_models
     {
     	$query = "SELECT * FROM tb_pinjam 
     			  INNER JOIN auth ON tb_pinjam.id_auth = auth.id_auth
-    			  INNER JOIN tb_buku ON tb_pinjam.id_buku = tb_buku.id_buku
-    			  INNER JOIN tb_jurusan ON tb_pinjam.id_jurusan = tb_jurusan.id_jurusan WHERE id_pinjam = :id";
+                  INNER JOIN tb_jurusan ON auth.id_jurusan = tb_jurusan.id_jurusan
+    			  INNER JOIN tb_buku ON tb_pinjam.id_buku = tb_buku.id_buku WHERE id_pinjam = :id";
     	$this->db->query($query);
     	$this->db->bind('id',$id);
     	return $this->db->single();

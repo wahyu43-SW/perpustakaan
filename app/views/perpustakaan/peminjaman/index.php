@@ -81,17 +81,6 @@
                             <?php endforeach ?>
                         </select>
                     </div>
-                     <div class="form-group">
-                       <label for="buku">Jurusan</label>
-                       <select name="jurusan" id="jurusan" class="form-control">
-                            <option value="">Pilih Jurusan</option>
-                            <?php foreach ($data['jurusan'] as $jurusan): ?>
-                                <option value="<?= $jurusan['id_jurusan'] ?>">
-                                    <?= $jurusan['jurusan'] ?>
-                                </option>
-                            <?php endforeach ?>
-                        </select>
-                    </div>
                     <div class="form-group">
                        <label for="pinjam">Pinjam Berapa Hari</label>
                        <select name="pinjam" id="pinjam" class="form-control">

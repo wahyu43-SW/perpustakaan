@@ -5,8 +5,9 @@
             <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-book"></i> &nbsp;Edit Buku pinjam</h6>
         </div>
         <div class="card-body " >
-          <form action="<?= BASEURL ?>/proses/ubahPinjam" method="POST" enctype="multipart/form-data">
+          <form action="<?= BASEURL ?>/proses/ubahPinjam" method="POST">
             <input type="hidden" name="id" id="id" value="<?=$data['allPm']['id_pinjam'] ?>">
+            <input type="hidden" name="id_bukulama" id="id_bukulama" value="<?=$data['allPm']['id_buku'] ?>">
                     <div class="form-group">
                         <label for="nama">Nama Peminjam</label>
                          <select name="nama" id="nama" class="form-control">
@@ -25,17 +26,6 @@
                             <?php foreach ($data['buku'] as $buku): ?>
                                 <option <?= $buku['id_buku'] === $data['allPm']['id_buku']  ? "selected" : "";?> value="<?= $buku['id_buku'] ?>">
                                     <?= $buku['nama_buku'] ?>
-                                </option>
-                            <?php endforeach ?>
-                        </select>
-                    </div>
-                     <div class="form-group">
-                       <label for="buku">Jurusan</label>
-                       <select name="jurusan" id="jurusan" class="form-control">
-                            <option value="">Pilih Jurusan</option>
-                            <?php foreach ($data['jurusan'] as $jurusan): ?>
-                                <option <?= $jurusan['id_jurusan'] === $data['allPm']['id_jurusan']  ? "selected" : "";?> value="<?= $jurusan['id_jurusan'] ?>">
-                                    <?= $jurusan['jurusan'] ?>
                                 </option>
                             <?php endforeach ?>
                         </select>
