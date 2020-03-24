@@ -5,32 +5,79 @@ class Laporan extends Controller {
         $this->db = new Database;
     }
     public function index() {
-        $data['judul'] = "Generate Laporan";
-        $this->view('template/header', $data);
-        $this->view('perpustakaan/laporan/index', $data);
-        $this->view('template/footer');
+    	if (empty($_SESSION['role']) || $_SESSION['role'] == "") {
+			header('Location: http://perpustakaan.com/projek_perpustakaan/Perpustakaan_mvc/app/views/template/404.php');
+		}
+		$auth = $_SESSION['role'];
+		if ($auth == '1' || $auth == 1) {
+	        $data['judul'] = "Generate Laporan";
+	        $this->view('template/header', $data);
+	        $this->view('perpustakaan/laporan/index', $data);
+	        $this->view('template/footer');
+	    }elseif ($auth == '2' || $auth == 2){
+			$data['judul'] = "Generate Laporan";
+	        $this->view('template/petugas/header', $data);
+	        $this->view('perpustakaan/laporan/index', $data);
+	        $this->view('template/petugas/footer');
+		}
     }
     public function buku() {
-        $data['judul'] = "Laporan Buku";
-        $data['buku'] = $this->model('Get_models')->ambilBuku();
-        $this->view('template/header', $data);
-        $this->view('perpustakaan/laporan/L_buku', $data);
-        $this->view('template/footer');
+    	if (empty($_SESSION['role']) || $_SESSION['role'] == "") {
+			header('Location: http://perpustakaan.com/projek_perpustakaan/Perpustakaan_mvc/app/views/template/404.php');
+		}
+		$auth = $_SESSION['role'];
+		if ($auth == '1' || $auth == 1) {
+	        $data['judul'] = "Laporan Buku";
+	        $data['buku'] = $this->model('Get_models')->ambilBuku();
+	        $this->view('template/header', $data);
+	        $this->view('perpustakaan/laporan/L_buku', $data);
+	        $this->view('template/footer');
+        }elseif ($auth == '2' || $auth == 2){
+			$data['judul'] = "Laporan Buku";
+	        $data['buku'] = $this->model('Get_models')->ambilBuku();
+	        $this->view('template/petugas/header', $data);
+	        $this->view('perpustakaan/laporan/L_buku', $data);
+	        $this->view('template/petugas/footer');
+		}
     }
     public function user() {
-        $data['judul'] = "Laporan Buku";
-        $data['user'] = $this->model('Get_models')->ambilUser();
-        $this->view('template/header', $data);
-        $this->view('perpustakaan/laporan/L_user', $data);
-        $this->view('template/footer');
+    	if (empty($_SESSION['role']) || $_SESSION['role'] == "") {
+			header('Location: http://perpustakaan.com/projek_perpustakaan/Perpustakaan_mvc/app/views/template/404.php');
+		}
+		$auth = $_SESSION['role'];
+		if ($auth == '1' || $auth == 1) {
+	        $data['judul'] = "Laporan Buku";
+	        $data['user'] = $this->model('Get_models')->ambilUser();
+	        $this->view('template/header', $data);
+	        $this->view('perpustakaan/laporan/L_user', $data);
+	        $this->view('template/footer');
+	     }elseif ($auth == '2' || $auth == 2){
+			$data['judul'] = "Laporan Buku";
+	        $data['user'] = $this->model('Get_models')->ambilUser();
+	        $this->view('template/petugas/header', $data);
+	        $this->view('perpustakaan/laporan/L_user', $data);
+	        $this->view('template/petugas/footer');
+		}
     }
 
     public function peminjaman() {
-        $data['judul'] = "Laporan ";
-        $data['peminjaman'] = $this->model('Get_models')->ambilPinjamkembali();
-        $this->view('template/header', $data);
-        $this->view('perpustakaan/laporan/L_peminjaman', $data);
-        $this->view('template/footer');
+    	if (empty($_SESSION['role']) || $_SESSION['role'] == "") {
+			header('Location: http://perpustakaan.com/projek_perpustakaan/Perpustakaan_mvc/app/views/template/404.php');
+		}
+		$auth = $_SESSION['role'];
+		if ($auth == '1' || $auth == 1) {
+	        $data['judul'] = "Laporan ";
+	        $data['peminjaman'] = $this->model('Get_models')->ambilPinjamkembali();
+	        $this->view('template/header', $data);
+	        $this->view('perpustakaan/laporan/L_peminjaman', $data);
+	        $this->view('template/footer');
+	    }elseif ($auth == '2' || $auth == 2){
+			$data['judul'] = "Laporan ";
+	        $data['peminjaman'] = $this->model('Get_models')->ambilPinjamkembali();
+	        $this->view('template/petugas/header', $data);
+	        $this->view('perpustakaan/laporan/L_peminjaman', $data);
+	        $this->view('template/petugas/footer');
+		}
     }
 
     public function cetak() {

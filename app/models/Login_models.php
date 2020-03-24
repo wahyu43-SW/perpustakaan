@@ -35,7 +35,7 @@ public function login($data){
                $_SESSION['username'] = $username;
                $_SESSION['nama'] = $nama;
                $_SESSION['status'] = 'ada';
-               $_SESSION['role'] = '1';
+               $_SESSION['role'] = $role;
                Flasher::setFlash('Selamat Datang ', $username,'success');
                header('Location: '.BASEURL.'');
             }elseif ($role == '2' || $role == 2) {
@@ -43,9 +43,9 @@ public function login($data){
                $_SESSION['username'] = $username;
                $_SESSION['nama'] = $nama;
                $_SESSION['status'] = 'ada';
-               $_SESSION['role'] = '2';
+               $_SESSION['role'] = $role;
                Flasher::setFlash('Selamat Datang ', $username,'success');
-               header('Location: '.BASEURL.'');
+               header('Location: '.BASEURL.'/petugas');
             }
             elseif ($role == '3' || $role == 3) {
                session_start();
