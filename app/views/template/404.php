@@ -122,6 +122,10 @@
 			font-weight: 700;
 			-webkit-box-shadow: 0px 4px 15px -5px #0046d5;
 			box-shadow: 0px 4px 15px -5px #0046d5;
+			transition: .5s ease-in-out;
+		}
+		.notfound a:hover{
+			transform: scale(1.08);
 		}
 
 
@@ -151,7 +155,7 @@
 					<span>!</span></h1>
 				</div>
 				<h2>404 - Page not found</h2>
-				<p>The page you are looking for might have been removed had its name changed or is temporarily unavailable.</p>
+				<p> Halaman yang Anda Cari mungkin telah dihapus namanya diubah atau sementara tidak tersedia.</p>
 				<a href="http://perpustakaan.com/projek_perpustakaan/Perpustakaan_mvc/public">Go To Homepage</a>
 			</div>
 		</div>
